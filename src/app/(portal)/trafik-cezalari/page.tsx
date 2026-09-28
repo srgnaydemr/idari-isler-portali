@@ -1,0 +1,12 @@
+import Link from "next/link";
+import { requireUser } from "@/lib/auth";
+import { getDatabase } from "@/lib/local/database";
+import { formatCurrency, formatDate } from "@/lib/format";
+
+export const dynamic="force-dynamic";
+export default async function TrafficFines({searchParams}:{searchParams:Promise<{q?:string;durum?:string}>}){
+  await requireUser();const sp=await searchParams;const db=getDatabase();const q=String(sp.q||"").trim(),durum=String(sp.durum||"");
+  const where=["1=1"],args:any[]=[];if(q){where.push("(v.plate LIKE ? COLLATE NOCASE OR COALESCE(f.driver,'') LIKE ? COLLATE NOCASE OR COALESCE(f.fine_type,'') LIKE ? COLLATE NOCASE)");args.push(`%${q}%`,`%${q}%`,`%${q}%`)}if(["PAID","UNPAID"].includes(durum)){where.push("f.payment_status=?");args.push(durum)}
+  const rows=db.prepare(`SELECT f.*,v.plate FROM vehicle_traffic_fines f JOIN vehicles v ON v.id=f.vehicle_id WHERE ${where.join(" AND ")} ORDER BY f.fine_date DESC,f.created_at DESC LIMIT 500`).all(...args) as any[];
+  return <><div className="page-head"><div><h1 className="page-title">Trafik Cezaları</h1><div className="page-sub">Araçlara ait trafik cezaları ve ödeme durumları.</div></div></div><form className="filters section" method="get"><input className="input filter-search" name="q" defaultValue={q} placeholder="Plaka, sürücü veya ceza türü ara…"/><select className="select" name="durum" defaultValue={durum}><option value="">Tüm Durumlar</option><option value="UNPAID">Ödenmedi</option><option value="PAID">Ödendi</option></select><button className="btn btn-primary">Filtrele</button><Link className="btn btn-secondary" href="/trafik-cezalari">Temizle</Link></form><section className="card table-wrap"><table className="table"><thead><tr><th>Tarih</th><th>Araç</th><th>Sürücü</th><th>Ceza Türü</th><th>Tutar</th><th>Ödeme</th><th>İşlem</th></tr></thead><tbody>{rows.map(r=><tr key={r.id}><td>{formatDate(r.fine_date)}</td><td><strong>{r.plate}</strong></td><td>{r.driver||"—"}</td><td>{r.fine_type}</td><td>{formatCurrency(r.amount||0)}</td><td><span className={`pill ${r.payment_status==='PAID'?'green':'orange'}`}>{r.payment_status==='PAID'?'Ödendi':'Ödenmedi'}</span></td><td><Link className="btn btn-secondary" href={`/araclar/${r.vehicle_id}/dosyalar`}>Araç Kaydını Aç</Link></td></tr>)}</tbody></table>{!rows.length?<div className="empty">Filtreye uygun trafik cezası bulunmuyor.</div>:null}</section></>;
+}

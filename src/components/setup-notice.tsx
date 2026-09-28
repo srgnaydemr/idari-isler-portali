@@ -1,0 +1,1 @@
+export function SetupNotice(){return <div className="notice" style={{marginBottom:16}}><strong>Veritabanı bağlantısı bekleniyor.</strong> Kurulum dosyasındaki bağlantı bilgilerini tamamlayıp veritabanı şemasını çalıştırın.</div>}

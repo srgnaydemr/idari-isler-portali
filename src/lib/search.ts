@@ -1,0 +1,5 @@
+/** One search normalization for UI, SQL adapters and global search. */
+export function searchFold(value:unknown){return String(value??'').normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[ıİI]/g,'i').toLowerCase().replace(/\s+/g,' ').trim()}
+export function searchMatches(value:unknown,query:unknown){const hay=searchFold(value),tokens=searchFold(query).split(/\s+/).filter(Boolean);return tokens.every(token=>hay.includes(token)||hay.replace(/\s/g,'').includes(token.replace(/\s/g,'')))}
+export function searchLike(value:unknown,pattern:unknown){const raw=String(pattern??'');if(raw.startsWith('%')&&raw.endsWith('%'))return searchMatches(value,raw.slice(1,-1));const escaped=searchFold(raw).replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/%/g,'.*').replace(/_/g,'.');return new RegExp('^'+escaped+'$','u').test(searchFold(value))}
+export function personnelLabel(p:any){return [`${p.first_name} ${p.last_name}`,[p.company,p.branch,p.department,p.phone].filter(Boolean).join(' / ')].filter(Boolean).join(' • ')}

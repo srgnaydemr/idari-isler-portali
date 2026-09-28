@@ -1,0 +1,3 @@
+import {randomUUID} from "node:crypto";import {getDatabase} from "@/lib/local/database";
+export function logApplicationError(area:string,error:unknown,userId?:string|null,code?:string){try{const e=error instanceof Error?error:new Error(String(error));getDatabase().prepare("INSERT INTO application_errors(id,created_at,area,error_code,message,details,user_id) VALUES(?,?,?,?,?,?,?)").run(randomUUID(),new Date().toISOString(),area,code||null,e.message.slice(0,500),(e.stack||"").slice(0,4000),userId||null)}catch{}}
+export function friendlyError(){return "İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin."}

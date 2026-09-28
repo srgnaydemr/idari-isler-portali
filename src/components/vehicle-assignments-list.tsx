@@ -1,0 +1,20 @@
+import {PersonnelSnapshot} from "@/components/personnel-snapshot";
+import Link from "next/link";
+import {requireUser} from "@/lib/auth";
+import {getDatabase} from "@/lib/local/database";
+import {formatDateTime,formatNumber} from "@/lib/format";
+
+export async function VehicleAssignmentsList({tab,qValue}:{tab:"active"|"history";qValue?:string}){
+  await requireUser();
+  const q=String(qValue||"").trim().toLocaleLowerCase("tr-TR");
+  const all=getDatabase().prepare(`SELECT a.*,v.plate,v.brand,v.model FROM vehicle_assignments a JOIN vehicles v ON v.id=a.vehicle_id ORDER BY (a.return_date IS NULL) DESC,a.delivery_date DESC,a.created_at DESC,a.id DESC`).all() as any[];
+  const visible=all.filter(r=>(tab==="active"?!r.return_date:!!r.return_date)&&(!q||`${r.plate} ${r.brand||""} ${r.model||""} ${r.assigned_to||""}`.toLocaleLowerCase("tr-TR").includes(q)));
+  const activeCount=all.filter(r=>!r.return_date).length,historyCount=all.filter(r=>!!r.return_date).length;
+  const currentPath=tab==="history"?"/arac-zimmetleri/gecmis":"/arac-zimmetleri";
+  return <>
+    <div className="page-head"><div><h1 className="page-title">Araç Zimmetleri</h1><div className="page-sub">Aktif araç zimmetlerini ve geçmiş iadeleri ayrı, aranabilir ve düzenli şekilde takip edin.</div></div></div>
+    <div className="grid-kpi section"><div className="card kpi"><div className="kpi-label">Aktif Zimmet</div><div className="kpi-value">{activeCount}</div></div><div className="card kpi"><div className="kpi-label">Geçmiş Zimmet</div><div className="kpi-value">{historyCount}</div></div></div>
+    <section className="card section"><div className="section-body"><div className="assignment-tabs"><Link className={`assignment-tab ${tab==="active"?"active":""}`} href="/arac-zimmetleri">Aktif Zimmetler <span className="count">{activeCount}</span></Link><Link className={`assignment-tab ${tab==="history"?"active":""}`} href="/arac-zimmetleri/gecmis">Geçmiş Zimmetler <span className="count">{historyCount}</span></Link></div><form className="filters section" method="get" action={currentPath}><input className="input filter-search" name="q" defaultValue={qValue||""} placeholder="Plaka veya personel adı/soyadı ara…"/><button className="btn btn-primary">Ara</button>{q?<Link className="btn btn-secondary" href={currentPath}>Temizle</Link>:null}</form></div></section>
+    <section className="card section table-wrap"><div className="section-head"><div><div className="section-title">{tab==="active"?"Aktif Zimmetler":"Geçmiş Zimmetler"}</div><div className="page-sub">{tab==="active"?"Halen personelde olan araçlar.":"İade alınmış zimmetler kalıcı olarak korunur."}</div></div></div><table className="table"><thead><tr><th>Araç</th><th>Personel</th><th>Zimmet Başlangıcı</th><th>Teslim KM</th>{tab==="history"?<><th>İade</th><th>İade KM</th><th>İade Bilgisi</th></>:null}<th>Durum</th><th>İşlem</th></tr></thead><tbody>{visible.map(r=><tr key={r.id}><td><Link className="link-primary" href={`/araclar/${r.vehicle_id}/zimmet`}><strong>{r.plate}</strong></Link><div className="page-sub">{[r.brand,r.model].filter(Boolean).join(" ")}</div></td><td><strong>{r.assigned_to||"—"}</strong><PersonnelSnapshot value={r.personnel_snapshot}/><div className="page-sub">{r.delivered_by?`Teslim eden: ${r.delivered_by}`:""}</div></td><td>{formatDateTime(r.delivery_date)}</td><td>{r.delivery_odometer!=null?`${formatNumber(r.delivery_odometer)} KM`:"—"}</td>{tab==="history"?<><td>{formatDateTime(r.return_date)}</td><td>{r.return_odometer!=null?`${formatNumber(r.return_odometer)} KM`:"—"}</td><td>{r.returned_to||"—"}{r.return_description?<div className="page-sub">{r.return_description}</div>:null}</td></>:null}<td><span className={`pill ${r.return_date?"green":"blue"}`}>{r.return_date?"İade Edildi":"Aktif Zimmet"}</span></td><td><Link className={`btn ${r.return_date?"btn-secondary":"btn-primary"}`} href={`/araclar/${r.vehicle_id}/zimmet`}>{r.return_date?"Zimmet Geçmişi":"İade Al"}</Link></td></tr>)}</tbody></table>{!visible.length?<div className="empty"><strong>Kayıt bulunamadı.</strong>Arama kriterini değiştirin.</div>:null}</section>
+  </>;
+}

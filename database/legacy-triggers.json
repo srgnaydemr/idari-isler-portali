@@ -1,0 +1,266 @@
+[
+  {
+    "name": "trg_one_active_replacement_insert",
+    "sql": "CREATE TRIGGER trg_one_active_replacement_insert BEFORE INSERT ON vehicle_replacement_records WHEN NEW.status='ACTIVE' BEGIN SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE vehicle_id=NEW.vehicle_id AND status='ACTIVE' AND id<>NEW.id) THEN RAISE(ABORT,'ACTIVE_REPLACEMENT_EXISTS') END; END"
+  },
+  {
+    "name": "trg_one_active_replacement_update",
+    "sql": "CREATE TRIGGER trg_one_active_replacement_update BEFORE UPDATE OF vehicle_id,status ON vehicle_replacement_records WHEN NEW.status='ACTIVE' BEGIN SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE vehicle_id=NEW.vehicle_id AND status='ACTIVE' AND id<>NEW.id) THEN RAISE(ABORT,'ACTIVE_REPLACEMENT_EXISTS') END; END"
+  },
+  {
+    "name": "trg_case_replacement_no_open_service_insert",
+    "sql": "CREATE TRIGGER trg_case_replacement_no_open_service_insert BEFORE INSERT ON vehicle_replacement_records WHEN NEW.status='ACTIVE' AND NEW.source_type IN ('ACCIDENT','DAMAGE') BEGIN SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END; END"
+  },
+  {
+    "name": "trg_case_replacement_no_open_service_update",
+    "sql": "CREATE TRIGGER trg_case_replacement_no_open_service_update BEFORE UPDATE OF vehicle_id,source_type,status ON vehicle_replacement_records WHEN NEW.status='ACTIVE' AND NEW.source_type IN ('ACCIDENT','DAMAGE') BEGIN SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END; END"
+  },
+  {
+    "name": "trg_service_no_active_case_insert",
+    "sql": "CREATE TRIGGER trg_service_no_active_case_insert BEFORE INSERT ON vehicle_service_records WHEN NEW.status='OPEN' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_accidents WHERE vehicle_id=NEW.vehicle_id AND status='IN_SERVICE')\n    OR EXISTS(SELECT 1 FROM vehicle_damages WHERE vehicle_id=NEW.vehicle_id AND status='IN_SERVICE')\n    OR EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE vehicle_id=NEW.vehicle_id AND status='ACTIVE' AND source_type IN ('ACCIDENT','DAMAGE'))\n  THEN RAISE(ABORT,'ACTIVE_DAMAGE_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "trg_service_no_active_case_update",
+    "sql": "CREATE TRIGGER trg_service_no_active_case_update BEFORE UPDATE OF vehicle_id,status ON vehicle_service_records WHEN NEW.status='OPEN' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_accidents WHERE vehicle_id=NEW.vehicle_id AND status='IN_SERVICE')\n    OR EXISTS(SELECT 1 FROM vehicle_damages WHERE vehicle_id=NEW.vehicle_id AND status='IN_SERVICE')\n    OR EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE vehicle_id=NEW.vehicle_id AND status='ACTIVE' AND source_type IN ('ACCIDENT','DAMAGE'))\n  THEN RAISE(ABORT,'ACTIVE_DAMAGE_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "trg_accident_in_service_no_open_service_insert",
+    "sql": "CREATE TRIGGER trg_accident_in_service_no_open_service_insert BEFORE INSERT ON vehicle_accidents WHEN NEW.status='IN_SERVICE' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "trg_accident_in_service_no_open_service_update",
+    "sql": "CREATE TRIGGER trg_accident_in_service_no_open_service_update BEFORE UPDATE OF vehicle_id,status ON vehicle_accidents WHEN NEW.status='IN_SERVICE' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "trg_damage_in_service_no_open_service_insert",
+    "sql": "CREATE TRIGGER trg_damage_in_service_no_open_service_insert BEFORE INSERT ON vehicle_damages WHEN NEW.status='IN_SERVICE' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "trg_damage_in_service_no_open_service_update",
+    "sql": "CREATE TRIGGER trg_damage_in_service_no_open_service_update BEFORE UPDATE OF vehicle_id,status ON vehicle_damages WHEN NEW.status='IN_SERVICE' BEGIN\n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_service_records WHERE vehicle_id=NEW.vehicle_id AND status='OPEN') THEN RAISE(ABORT,'OPEN_SERVICE_CONFLICT') END;\nEND"
+  },
+  {
+    "name": "case_service_keep",
+    "sql": "CREATE TRIGGER case_service_keep BEFORE DELETE ON case_services BEGIN SELECT RAISE(ABORT,'Servis geçmişi silinemez.'); END"
+  },
+  {
+    "name": "case_service_closed",
+    "sql": "CREATE TRIGGER case_service_closed BEFORE UPDATE ON case_services WHEN OLD.exit_at IS NOT NULL BEGIN SELECT RAISE(ABORT,'Tamamlanan servis değiştirilemez.'); END"
+  },
+  {
+    "name": "vehicle_events_keep",
+    "sql": "CREATE TRIGGER vehicle_events_keep BEFORE DELETE ON vehicle_events BEGIN SELECT RAISE(ABORT,'Geçmiş silinemez.'); END"
+  },
+  {
+    "name": "vehicle_events_immutable",
+    "sql": "CREATE TRIGGER vehicle_events_immutable BEFORE UPDATE ON vehicle_events BEGIN SELECT RAISE(ABORT,'Geçmiş değiştirilemez.'); END"
+  },
+  {
+    "name": "damage_km_required",
+    "sql": "CREATE TRIGGER damage_km_required BEFORE INSERT ON vehicle_damages WHEN NEW.odometer IS NULL OR NEW.odometer<0 OR NEW.odometer != CAST(NEW.odometer AS INTEGER) BEGIN SELECT RAISE(ABORT,'Güncel KM zorunludur.'); END"
+  },
+  {
+    "name": "damage_km_lower",
+    "sql": "CREATE TRIGGER damage_km_lower BEFORE INSERT ON vehicle_damages WHEN NEW.odometer < (SELECT current_odometer FROM vehicles WHERE id=NEW.vehicle_id) BEGIN SELECT RAISE(ABORT,'Girilen kilometre aracın mevcut kilometresinden düşük olamaz.'); END"
+  },
+  {
+    "name": "vehicle_accidents_service_required",
+    "sql": "CREATE TRIGGER vehicle_accidents_service_required BEFORE UPDATE OF status ON vehicle_accidents\n      WHEN NEW.status='IN_SERVICE' AND NOT EXISTS(SELECT 1 FROM case_services WHERE source_type='ACCIDENT' AND source_id=NEW.id AND exit_at IS NULL)\n      BEGIN SELECT RAISE(ABORT,'Servis adı, giriş tarihi, saati ve KM ile Servis Süreci bölümünden giriş yapın.'); END"
+  },
+  {
+    "name": "vehicle_accidents_service_exit_required",
+    "sql": "CREATE TRIGGER vehicle_accidents_service_exit_required BEFORE UPDATE OF status ON vehicle_accidents\n      WHEN NEW.status<>'IN_SERVICE' AND EXISTS(SELECT 1 FROM case_services WHERE source_type='ACCIDENT' AND source_id=NEW.id AND exit_at IS NULL)\n      BEGIN SELECT RAISE(ABORT,'Önce servis çıkışını tamamlayın.'); END"
+  },
+  {
+    "name": "vehicle_damages_service_required",
+    "sql": "CREATE TRIGGER vehicle_damages_service_required BEFORE UPDATE OF status ON vehicle_damages\n      WHEN NEW.status='IN_SERVICE' AND NOT EXISTS(SELECT 1 FROM case_services WHERE source_type='DAMAGE' AND source_id=NEW.id AND exit_at IS NULL)\n      BEGIN SELECT RAISE(ABORT,'Servis adı, giriş tarihi, saati ve KM ile Servis Süreci bölümünden giriş yapın.'); END"
+  },
+  {
+    "name": "vehicle_damages_service_exit_required",
+    "sql": "CREATE TRIGGER vehicle_damages_service_exit_required BEFORE UPDATE OF status ON vehicle_damages\n      WHEN NEW.status<>'IN_SERVICE' AND EXISTS(SELECT 1 FROM case_services WHERE source_type='DAMAGE' AND source_id=NEW.id AND exit_at IS NULL)\n      BEGIN SELECT RAISE(ABORT,'Önce servis çıkışını tamamlayın.'); END"
+  },
+  {
+    "name": "event_vehicles_INSERT",
+    "sql": "CREATE TRIGGER event_vehicles_INSERT AFTER INSERT ON vehicles BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicles',NEW.id,'Araç bilgileri oluşturuldu',json_object('id',NEW.id,'plate',NEW.plate,'ownership_type',NEW.ownership_type,'brand',NEW.brand,'model',NEW.model,'model_year',NEW.model_year,'vehicle_type',NEW.vehicle_type,'fuel_type',NEW.fuel_type,'transmission',NEW.transmission,'color',NEW.color,'vin',NEW.vin,'engine_number',NEW.engine_number,'registration_serial_no',NEW.registration_serial_no,'registration_document_no',NEW.registration_document_no,'registration_date',NEW.registration_date,'current_odometer',NEW.current_odometer,'responsible_person',NEW.responsible_person,'status',NEW.status,'tire_storage_dealer',NEW.tire_storage_dealer,'fleet_company',NEW.fleet_company,'contract_start_date',NEW.contract_start_date,'contract_end_date',NEW.contract_end_date,'contract_km_limit',NEW.contract_km_limit,'contract_reference',NEW.contract_reference,'planned_return_date',NEW.planned_return_date,'fleet_description',NEW.fleet_description,'rental_tracking_enabled',NEW.rental_tracking_enabled,'is_active',NEW.is_active,'created_by',NEW.created_by,'updated_by',NEW.updated_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicles_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicles_UPDATE AFTER UPDATE ON vehicles BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicles',NEW.id,'Araç bilgileri güncellendi',json_object('id',NEW.id,'plate',NEW.plate,'ownership_type',NEW.ownership_type,'brand',NEW.brand,'model',NEW.model,'model_year',NEW.model_year,'vehicle_type',NEW.vehicle_type,'fuel_type',NEW.fuel_type,'transmission',NEW.transmission,'color',NEW.color,'vin',NEW.vin,'engine_number',NEW.engine_number,'registration_serial_no',NEW.registration_serial_no,'registration_document_no',NEW.registration_document_no,'registration_date',NEW.registration_date,'current_odometer',NEW.current_odometer,'responsible_person',NEW.responsible_person,'status',NEW.status,'tire_storage_dealer',NEW.tire_storage_dealer,'fleet_company',NEW.fleet_company,'contract_start_date',NEW.contract_start_date,'contract_end_date',NEW.contract_end_date,'contract_km_limit',NEW.contract_km_limit,'contract_reference',NEW.contract_reference,'planned_return_date',NEW.planned_return_date,'fleet_description',NEW.fleet_description,'rental_tracking_enabled',NEW.rental_tracking_enabled,'is_active',NEW.is_active,'created_by',NEW.created_by,'updated_by',NEW.updated_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_assignments_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_assignments_INSERT AFTER INSERT ON vehicle_assignments BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_assignments',NEW.id,'Araç zimmeti oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'assigned_to',NEW.assigned_to,'delivered_by',NEW.delivered_by,'delivery_date',NEW.delivery_date,'delivery_odometer',NEW.delivery_odometer,'vehicle_condition_delivery',NEW.vehicle_condition_delivery,'delivery_description',NEW.delivery_description,'return_date',NEW.return_date,'return_odometer',NEW.return_odometer,'returned_to',NEW.returned_to,'vehicle_condition_return',NEW.vehicle_condition_return,'return_description',NEW.return_description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_assignments_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_assignments_UPDATE AFTER UPDATE ON vehicle_assignments BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_assignments',NEW.id,'Araç zimmeti güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'assigned_to',NEW.assigned_to,'delivered_by',NEW.delivered_by,'delivery_date',NEW.delivery_date,'delivery_odometer',NEW.delivery_odometer,'vehicle_condition_delivery',NEW.vehicle_condition_delivery,'delivery_description',NEW.delivery_description,'return_date',NEW.return_date,'return_odometer',NEW.return_odometer,'returned_to',NEW.returned_to,'vehicle_condition_return',NEW.vehicle_condition_return,'return_description',NEW.return_description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_maintenance_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_maintenance_INSERT AFTER INSERT ON vehicle_maintenance BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_maintenance',NEW.id,'Bakım oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'maintenance_date',NEW.maintenance_date,'odometer',NEW.odometer,'service_name',NEW.service_name,'maintenance_type',NEW.maintenance_type,'description',NEW.description,'cost',NEW.cost,'next_maintenance_odometer',NEW.next_maintenance_odometer,'next_maintenance_date',NEW.next_maintenance_date,'status',NEW.status,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_maintenance_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_maintenance_UPDATE AFTER UPDATE ON vehicle_maintenance BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_maintenance',NEW.id,'Bakım güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'maintenance_date',NEW.maintenance_date,'odometer',NEW.odometer,'service_name',NEW.service_name,'maintenance_type',NEW.maintenance_type,'description',NEW.description,'cost',NEW.cost,'next_maintenance_odometer',NEW.next_maintenance_odometer,'next_maintenance_date',NEW.next_maintenance_date,'status',NEW.status,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_accidents_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_accidents_INSERT AFTER INSERT ON vehicle_accidents BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_accidents',NEW.id,'Kaza dosyası oluşturuldu',json_object('id',NEW.id,'file_number',NEW.file_number,'vehicle_id',NEW.vehicle_id,'accident_date',NEW.accident_date,'accident_time',NEW.accident_time,'driver',NEW.driver,'accident_location',NEW.accident_location,'counterparty_plate',NEW.counterparty_plate,'description',NEW.description,'damage_description',NEW.damage_description,'fault_rate',NEW.fault_rate,'insurance_company',NEW.insurance_company,'insurance_claim_number',NEW.insurance_claim_number,'expert_info',NEW.expert_info,'status',NEW.status,'estimated_cost',NEW.estimated_cost,'actual_cost',NEW.actual_cost,'replacement_vehicle_status',NEW.replacement_vehicle_status,'notes',NEW.notes,'created_by',NEW.created_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_accidents_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_accidents_UPDATE AFTER UPDATE ON vehicle_accidents BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_accidents',NEW.id,'Kaza dosyası güncellendi',json_object('id',NEW.id,'file_number',NEW.file_number,'vehicle_id',NEW.vehicle_id,'accident_date',NEW.accident_date,'accident_time',NEW.accident_time,'driver',NEW.driver,'accident_location',NEW.accident_location,'counterparty_plate',NEW.counterparty_plate,'description',NEW.description,'damage_description',NEW.damage_description,'fault_rate',NEW.fault_rate,'insurance_company',NEW.insurance_company,'insurance_claim_number',NEW.insurance_claim_number,'expert_info',NEW.expert_info,'status',NEW.status,'estimated_cost',NEW.estimated_cost,'actual_cost',NEW.actual_cost,'replacement_vehicle_status',NEW.replacement_vehicle_status,'notes',NEW.notes,'created_by',NEW.created_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_damages_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_damages_INSERT AFTER INSERT ON vehicle_damages BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_damages',NEW.id,'Hasar kaydı oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'damage_date',NEW.damage_date,'odometer',NEW.odometer,'damage_type',NEW.damage_type,'damaged_area',NEW.damaged_area,'description',NEW.description,'service_name',NEW.service_name,'cost',NEW.cost,'status',NEW.status,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'created_by',NEW.created_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_damages_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_damages_UPDATE AFTER UPDATE ON vehicle_damages BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_damages',NEW.id,'Hasar kaydı güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'damage_date',NEW.damage_date,'odometer',NEW.odometer,'damage_type',NEW.damage_type,'damaged_area',NEW.damaged_area,'description',NEW.description,'service_name',NEW.service_name,'cost',NEW.cost,'status',NEW.status,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'created_by',NEW.created_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_tire_transactions_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_tire_transactions_INSERT AFTER INSERT ON vehicle_tire_transactions BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_tire_transactions',NEW.id,'Lastik işlemi oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'transaction_date',NEW.transaction_date,'odometer',NEW.odometer,'tire_type',NEW.tire_type,'brand',NEW.brand,'model',NEW.model,'size',NEW.size,'quantity',NEW.quantity,'transaction_type',NEW.transaction_type,'tire_dealer',NEW.tire_dealer,'storage_dealer',NEW.storage_dealer,'description',NEW.description,'cost',NEW.cost,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_tire_transactions_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_tire_transactions_UPDATE AFTER UPDATE ON vehicle_tire_transactions BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_tire_transactions',NEW.id,'Lastik işlemi güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'transaction_date',NEW.transaction_date,'odometer',NEW.odometer,'tire_type',NEW.tire_type,'brand',NEW.brand,'model',NEW.model,'size',NEW.size,'quantity',NEW.quantity,'transaction_type',NEW.transaction_type,'tire_dealer',NEW.tire_dealer,'storage_dealer',NEW.storage_dealer,'description',NEW.description,'cost',NEW.cost,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_traffic_fines_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_traffic_fines_INSERT AFTER INSERT ON vehicle_traffic_fines BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_traffic_fines',NEW.id,'Trafik cezası oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'fine_date',NEW.fine_date,'fine_time',NEW.fine_time,'driver',NEW.driver,'fine_type',NEW.fine_type,'amount',NEW.amount,'notification_date',NEW.notification_date,'payment_status',NEW.payment_status,'payment_date',NEW.payment_date,'description',NEW.description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_traffic_fines_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_traffic_fines_UPDATE AFTER UPDATE ON vehicle_traffic_fines BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_traffic_fines',NEW.id,'Trafik cezası güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'fine_date',NEW.fine_date,'fine_time',NEW.fine_time,'driver',NEW.driver,'fine_type',NEW.fine_type,'amount',NEW.amount,'notification_date',NEW.notification_date,'payment_status',NEW.payment_status,'payment_date',NEW.payment_date,'description',NEW.description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_service_records_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_service_records_INSERT AFTER INSERT ON vehicle_service_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_service_records',NEW.id,'Servis / İkame oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'service_in_at',NEW.service_in_at,'service_out_at',NEW.service_out_at,'service_name',NEW.service_name,'service_reason',NEW.service_reason,'odometer',NEW.odometer,'notes',NEW.notes,'cost',NEW.cost,'next_maintenance_date',NEW.next_maintenance_date,'next_maintenance_odometer',NEW.next_maintenance_odometer,'replacement_vehicle_provided',NEW.replacement_vehicle_provided,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'completion_notes',NEW.completion_notes,'previous_vehicle_status',NEW.previous_vehicle_status,'status',NEW.status,'created_by',NEW.created_by,'closed_by',NEW.closed_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_service_records_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_service_records_UPDATE AFTER UPDATE ON vehicle_service_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_service_records',NEW.id,'Servis / İkame güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'service_in_at',NEW.service_in_at,'service_out_at',NEW.service_out_at,'service_name',NEW.service_name,'service_reason',NEW.service_reason,'odometer',NEW.odometer,'notes',NEW.notes,'cost',NEW.cost,'next_maintenance_date',NEW.next_maintenance_date,'next_maintenance_odometer',NEW.next_maintenance_odometer,'replacement_vehicle_provided',NEW.replacement_vehicle_provided,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'completion_notes',NEW.completion_notes,'previous_vehicle_status',NEW.previous_vehicle_status,'status',NEW.status,'created_by',NEW.created_by,'closed_by',NEW.closed_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_usage_records_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_usage_records_INSERT AFTER INSERT ON vehicle_usage_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_usage_records',NEW.id,'Günlük araç kullanımı oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'personnel_id',NEW.personnel_id,'personnel_name_snapshot',NEW.personnel_name_snapshot,'department_snapshot',NEW.department_snapshot,'checkout_at',NEW.checkout_at,'checkout_odometer',NEW.checkout_odometer,'return_at',NEW.return_at,'return_odometer',NEW.return_odometer,'purpose',NEW.purpose,'description',NEW.description,'return_note',NEW.return_note,'status',NEW.status,'created_by',NEW.created_by,'returned_by',NEW.returned_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_usage_records_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_usage_records_UPDATE AFTER UPDATE ON vehicle_usage_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_usage_records',NEW.id,'Günlük araç kullanımı güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'personnel_id',NEW.personnel_id,'personnel_name_snapshot',NEW.personnel_name_snapshot,'department_snapshot',NEW.department_snapshot,'checkout_at',NEW.checkout_at,'checkout_odometer',NEW.checkout_odometer,'return_at',NEW.return_at,'return_odometer',NEW.return_odometer,'purpose',NEW.purpose,'description',NEW.description,'return_note',NEW.return_note,'status',NEW.status,'created_by',NEW.created_by,'returned_by',NEW.returned_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_replacement_records_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_replacement_records_INSERT AFTER INSERT ON vehicle_replacement_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_replacement_records',NEW.id,'İkame araç oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'source_type',NEW.source_type,'source_id',NEW.source_id,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'status',NEW.status,'created_by',NEW.created_by,'updated_by',NEW.updated_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_vehicle_replacement_records_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_replacement_records_UPDATE AFTER UPDATE ON vehicle_replacement_records BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_replacement_records',NEW.id,'İkame araç güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'source_type',NEW.source_type,'source_id',NEW.source_id,'replacement_plate',NEW.replacement_plate,'replacement_received_at',NEW.replacement_received_at,'replacement_returned_at',NEW.replacement_returned_at,'replacement_company',NEW.replacement_company,'replacement_notes',NEW.replacement_notes,'status',NEW.status,'created_by',NEW.created_by,'updated_by',NEW.updated_by,'created_at',NEW.created_at,'updated_at',NEW.updated_at)); END"
+  },
+  {
+    "name": "event_case_services_INSERT",
+    "sql": "CREATE TRIGGER event_case_services_INSERT AFTER INSERT ON case_services BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'case_services',NEW.id,'Kaza / Hasar servis süreci oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'source_type',NEW.source_type,'source_id',NEW.source_id,'service_name',NEW.service_name,'entry_at',NEW.entry_at,'entry_km',NEW.entry_km,'entry_note',NEW.entry_note,'exit_at',NEW.exit_at,'exit_km',NEW.exit_km,'exit_note',NEW.exit_note,'created_at',NEW.created_at,'completed_at',NEW.completed_at,'created_by',NEW.created_by)); END"
+  },
+  {
+    "name": "event_case_services_UPDATE",
+    "sql": "CREATE TRIGGER event_case_services_UPDATE AFTER UPDATE ON case_services BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'case_services',NEW.id,'Kaza / Hasar servis süreci güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'source_type',NEW.source_type,'source_id',NEW.source_id,'service_name',NEW.service_name,'entry_at',NEW.entry_at,'entry_km',NEW.entry_km,'entry_note',NEW.entry_note,'exit_at',NEW.exit_at,'exit_km',NEW.exit_km,'exit_note',NEW.exit_note,'created_at',NEW.created_at,'completed_at',NEW.completed_at,'created_by',NEW.created_by)); END"
+  },
+  {
+    "name": "event_vehicle_compliance_documents_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_compliance_documents_INSERT AFTER INSERT ON vehicle_compliance_documents BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_compliance_documents',NEW.id,'Araç belgesi oluşturuldu',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'document_type',NEW.document_type,'start_date',NEW.start_date,'end_date',NEW.end_date,'description',NEW.description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_compliance_documents_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_compliance_documents_UPDATE AFTER UPDATE ON vehicle_compliance_documents BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES(NEW.vehicle_id,strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_compliance_documents',NEW.id,'Araç belgesi güncellendi',json_object('id',NEW.id,'vehicle_id',NEW.vehicle_id,'document_type',NEW.document_type,'start_date',NEW.start_date,'end_date',NEW.end_date,'description',NEW.description,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_accident_updates_INSERT",
+    "sql": "CREATE TRIGGER event_vehicle_accident_updates_INSERT AFTER INSERT ON vehicle_accident_updates BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES((SELECT vehicle_id FROM vehicle_accidents WHERE id=NEW.accident_id),strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_accident_updates',NEW.id,'Kaza gelişme notu oluşturuldu',json_object('id',NEW.id,'accident_id',NEW.accident_id,'note',NEW.note,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "event_vehicle_accident_updates_UPDATE",
+    "sql": "CREATE TRIGGER event_vehicle_accident_updates_UPDATE AFTER UPDATE ON vehicle_accident_updates BEGIN INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details) VALUES((SELECT vehicle_id FROM vehicle_accidents WHERE id=NEW.accident_id),strftime('%Y-%m-%dT%H:%M:%fZ','now'),'vehicle_accident_updates',NEW.id,'Kaza gelişme notu güncellendi',json_object('id',NEW.id,'accident_id',NEW.accident_id,'note',NEW.note,'created_by',NEW.created_by,'created_at',NEW.created_at)); END"
+  },
+  {
+    "name": "replacement_history_keep",
+    "sql": "CREATE TRIGGER replacement_history_keep\n    BEFORE DELETE ON vehicle_replacement_records\n    BEGIN\n      SELECT RAISE(ABORT,'İkame araç geçmişi silinemez.');\n    END"
+  },
+  {
+    "name": "tire_km_required_insert",
+    "sql": "CREATE TRIGGER tire_km_required_insert\n    BEFORE INSERT ON vehicle_tire_transactions\n    WHEN NEW.odometer IS NULL OR NEW.odometer < 0 OR NEW.odometer != CAST(NEW.odometer AS INTEGER)\n    BEGIN SELECT RAISE(ABORT,'İşlem KM zorunludur.'); END"
+  },
+  {
+    "name": "tire_km_lower_insert",
+    "sql": "CREATE TRIGGER tire_km_lower_insert\n    BEFORE INSERT ON vehicle_tire_transactions\n    WHEN NEW.odometer < (SELECT current_odometer FROM vehicles WHERE id=NEW.vehicle_id)\n    BEGIN SELECT RAISE(ABORT,'Girilen kilometre aracın mevcut güncel kilometresinden düşük olamaz.'); END"
+  },
+  {
+    "name": "tire_km_sync_insert",
+    "sql": "CREATE TRIGGER tire_km_sync_insert\n    AFTER INSERT ON vehicle_tire_transactions\n    WHEN NEW.odometer > (SELECT current_odometer FROM vehicles WHERE id=NEW.vehicle_id)\n    BEGIN\n      INSERT INTO vehicle_odometer_history(id,vehicle_id,previous_odometer,new_odometer,description,recorded_by,recorded_at)\n      SELECT lower(hex(randomblob(16))),NEW.vehicle_id,current_odometer,NEW.odometer,'Lastik işlemi',NEW.created_by,strftime('%Y-%m-%dT%H:%M:%fZ','now')\n      FROM vehicles WHERE id=NEW.vehicle_id;\n      UPDATE vehicles SET current_odometer=NEW.odometer,updated_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=NEW.vehicle_id;\n    END"
+  },
+  {
+    "name": "tire_km_required_update",
+    "sql": "CREATE TRIGGER tire_km_required_update\n    BEFORE UPDATE OF vehicle_id,odometer ON vehicle_tire_transactions\n    WHEN NEW.odometer IS NULL OR NEW.odometer < 0 OR NEW.odometer != CAST(NEW.odometer AS INTEGER)\n    BEGIN SELECT RAISE(ABORT,'İşlem KM zorunludur.'); END"
+  },
+  {
+    "name": "tire_km_lower_update",
+    "sql": "CREATE TRIGGER tire_km_lower_update\n    BEFORE UPDATE OF vehicle_id,odometer ON vehicle_tire_transactions\n    WHEN NEW.odometer < (SELECT current_odometer FROM vehicles WHERE id=NEW.vehicle_id)\n         AND NEW.odometer <> OLD.odometer\n    BEGIN SELECT RAISE(ABORT,'Girilen kilometre aracın mevcut güncel kilometresinden düşük olamaz.'); END"
+  },
+  {
+    "name": "tire_km_sync_update",
+    "sql": "CREATE TRIGGER tire_km_sync_update\n    AFTER UPDATE OF vehicle_id,odometer ON vehicle_tire_transactions\n    WHEN NEW.odometer > (SELECT current_odometer FROM vehicles WHERE id=NEW.vehicle_id)\n    BEGIN\n      INSERT INTO vehicle_odometer_history(id,vehicle_id,previous_odometer,new_odometer,description,recorded_by,recorded_at)\n      SELECT lower(hex(randomblob(16))),NEW.vehicle_id,current_odometer,NEW.odometer,'Lastik işlemi güncellendi',NEW.created_by,strftime('%Y-%m-%dT%H:%M:%fZ','now')\n      FROM vehicles WHERE id=NEW.vehicle_id;\n      UPDATE vehicles SET current_odometer=NEW.odometer,updated_at=strftime('%Y-%m-%dT%H:%M:%fZ','now') WHERE id=NEW.vehicle_id;\n    END"
+  },
+  {
+    "name": "rental_contract_validate_dates_update",
+    "sql": "CREATE TRIGGER rental_contract_validate_dates_update\n    BEFORE UPDATE OF start_date,end_date ON vehicle_rental_contracts\n    BEGIN\n      SELECT CASE WHEN date(NEW.end_date) <= date(NEW.start_date) THEN RAISE(ABORT,'Sözleşme bitiş tarihi başlangıç tarihinden sonra olmalıdır.') END;\n    END"
+  },
+  {
+    "name": "rental_contract_validate_insert",
+    "sql": "CREATE TRIGGER rental_contract_validate_insert\n    BEFORE INSERT ON vehicle_rental_contracts\n    BEGIN\n      SELECT CASE WHEN date(NEW.end_date) <= date(NEW.start_date) THEN RAISE(ABORT,'Sözleşme bitiş tarihi başlangıç tarihinden sonra olmalıdır.') END;\n      SELECT CASE WHEN NOT EXISTS(SELECT 1 FROM vehicles v WHERE v.id=NEW.vehicle_id AND v.is_active=1 AND v.ownership_type='FLEET') THEN RAISE(ABORT,'Kiralama sözleşmesi yalnızca aktif filo/kiralık araçlar için kullanılabilir.') END;\n    END"
+  },
+  {
+    "name": "event_attachment_version",
+    "sql": "CREATE TRIGGER event_attachment_version AFTER INSERT ON attachment_versions BEGIN\n      INSERT INTO vehicle_events(vehicle_id,created_at,entity_type,entity_id,title,details)\n      SELECT CASE a.entity_type\n        WHEN 'vehicle' THEN a.entity_id\n        WHEN 'accident' THEN (SELECT vehicle_id FROM vehicle_accidents WHERE id=a.entity_id)\n        WHEN 'vehicle_damage' THEN (SELECT vehicle_id FROM vehicle_damages WHERE id=a.entity_id)\n        WHEN 'assignment' THEN (SELECT vehicle_id FROM vehicle_assignments WHERE id=a.entity_id)\n        WHEN 'vehicle_service_record' THEN (SELECT vehicle_id FROM vehicle_service_records WHERE id=a.entity_id)\n        WHEN 'traffic_fine' THEN (SELECT vehicle_id FROM vehicle_traffic_fines WHERE id=a.entity_id)\n      END,\n      strftime('%Y-%m-%dT%H:%M:%fZ','now'),'attachment_versions',NEW.id,\n      CASE WHEN a.entity_type='traffic_fine' THEN 'Trafik cezası belgesi yüklendi' ELSE 'Araç belgesi yüklendi' END,\n      json_object('description',NEW.original_filename)\n      FROM attachments a WHERE a.id=NEW.attachment_id AND (CASE a.entity_type\n        WHEN 'vehicle' THEN a.entity_id\n        WHEN 'accident' THEN (SELECT vehicle_id FROM vehicle_accidents WHERE id=a.entity_id)\n        WHEN 'vehicle_damage' THEN (SELECT vehicle_id FROM vehicle_damages WHERE id=a.entity_id)\n        WHEN 'assignment' THEN (SELECT vehicle_id FROM vehicle_assignments WHERE id=a.entity_id)\n        WHEN 'vehicle_service_record' THEN (SELECT vehicle_id FROM vehicle_service_records WHERE id=a.entity_id)\n        WHEN 'traffic_fine' THEN (SELECT vehicle_id FROM vehicle_traffic_fines WHERE id=a.entity_id)\n      END) IS NOT NULL;\n    END"
+  },
+  {
+    "name": "snapshot_personnel_assignments",
+    "sql": "CREATE TRIGGER snapshot_personnel_assignments AFTER INSERT ON personnel_assignments BEGIN\n   UPDATE personnel_assignments SET personnel_snapshot=(SELECT json_object('first_name',first_name,'last_name',last_name,'company',company,'branch',branch,'department',department) FROM personnel WHERE id=NEW.personnel_id) WHERE id=NEW.id;\n  END"
+  },
+  {
+    "name": "snapshot_vehicle_usage_records",
+    "sql": "CREATE TRIGGER snapshot_vehicle_usage_records AFTER INSERT ON vehicle_usage_records BEGIN\n   UPDATE vehicle_usage_records SET personnel_snapshot=(SELECT json_object('first_name',first_name,'last_name',last_name,'company',company,'branch',branch,'department',department) FROM personnel WHERE id=NEW.personnel_id) WHERE id=NEW.id;\n  END"
+  },
+  {
+    "name": "snapshot_vehicle_assignments",
+    "sql": "CREATE TRIGGER snapshot_vehicle_assignments AFTER INSERT ON vehicle_assignments BEGIN\n   UPDATE vehicle_assignments SET personnel_snapshot=(SELECT json_object('first_name',first_name,'last_name',last_name,'company',company,'branch',branch,'department',department) FROM personnel WHERE id=NEW.personnel_id) WHERE id=NEW.id;\n  END"
+  },
+  {
+    "name": "compliance_current_insert",
+    "sql": "CREATE TRIGGER compliance_current_insert AFTER INSERT ON vehicle_compliance_documents BEGIN\n INSERT INTO compliance_current VALUES(NEW.vehicle_id,NEW.document_type,NEW.id) ON CONFLICT(vehicle_id,document_type) DO UPDATE SET document_id=excluded.document_id; END"
+  },
+  {
+    "name": "compliance_current_update",
+    "sql": "CREATE TRIGGER compliance_current_update AFTER UPDATE OF end_date ON vehicle_compliance_documents BEGIN\n INSERT INTO compliance_current VALUES(NEW.vehicle_id,NEW.document_type,NEW.id) ON CONFLICT(vehicle_id,document_type) DO UPDATE SET document_id=excluded.document_id; END"
+  },
+  {
+    "name": "freeze_personnel_before_update",
+    "sql": "CREATE TRIGGER freeze_personnel_before_update BEFORE UPDATE OF first_name,last_name,company,branch,department ON personnel BEGIN\n  UPDATE personnel_assignments SET personnel_snapshot=json_object('first_name',OLD.first_name,'last_name',OLD.last_name,'company',OLD.company,'branch',OLD.branch,'department',OLD.department,'legacy_snapshot',1) WHERE personnel_id=OLD.id AND personnel_snapshot IS NULL;\n  UPDATE vehicle_usage_records SET personnel_snapshot=json_object('first_name',OLD.first_name,'last_name',OLD.last_name,'company',OLD.company,'branch',OLD.branch,'department',department_snapshot,'legacy_snapshot',1) WHERE personnel_id=OLD.id AND personnel_snapshot IS NULL;\n  UPDATE vehicle_assignments SET personnel_snapshot=json_object('first_name',OLD.first_name,'last_name',OLD.last_name,'company',OLD.company,'branch',OLD.branch,'department',OLD.department,'legacy_snapshot',1) WHERE personnel_id=OLD.id AND personnel_snapshot IS NULL;\n END"
+  },
+  {
+    "name": "usage_replacement_snapshot",
+    "sql": "CREATE TRIGGER usage_replacement_snapshot AFTER INSERT ON vehicle_usage_records BEGIN\n  UPDATE vehicle_usage_records SET replacement_record_id=(SELECT id FROM vehicle_replacement_records WHERE replacement_vehicle_id=NEW.vehicle_id AND status='ACTIVE' LIMIT 1),main_plate_snapshot=(SELECT v.plate FROM vehicle_replacement_records r JOIN vehicles v ON v.id=r.vehicle_id WHERE r.replacement_vehicle_id=NEW.vehicle_id AND r.status='ACTIVE' LIMIT 1) WHERE id=NEW.id;\n END"
+  },
+  {
+    "name": "replacement_vehicle_insert",
+    "sql": "CREATE TRIGGER replacement_vehicle_insert AFTER INSERT ON vehicle_replacement_records BEGIN \n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ','') AND is_replacement=0) THEN RAISE(ABORT,'İkame plakası mevcut ana araçla çakışıyor.') END;\n  SELECT CASE WHEN NEW.status='ACTIVE' AND EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE id<>NEW.id AND status='ACTIVE' AND replace(upper(replacement_plate),' ','')=replace(upper(NEW.replacement_plate),' ','')) THEN RAISE(ABORT,'Bu ikame plaka başka bir aktif süreçte kullanılıyor.') END;\n  INSERT INTO vehicles(id,plate,ownership_type,brand,model,model_year,vehicle_type,tire_storage_dealer,status,is_active,is_replacement,created_at,updated_at)\n   SELECT 'replacement:'||NEW.id,upper(trim(NEW.replacement_plate)),'FLEET','İkame','Araç',CAST(strftime('%Y','now') AS INTEGER),'İkame Araç','—',CASE WHEN NEW.status='ACTIVE' THEN 'REPLACEMENT' ELSE 'INACTIVE' END,CASE WHEN NEW.status='ACTIVE' THEN 1 ELSE 0 END,1,NEW.created_at,NEW.updated_at\n   WHERE NOT EXISTS(SELECT 1 FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ',''));\n  UPDATE vehicle_replacement_records SET replacement_vehicle_id=(SELECT id FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ','')) WHERE id=NEW.id;\n  UPDATE vehicles SET is_active=CASE WHEN EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE replacement_vehicle_id=vehicles.id AND status='ACTIVE') THEN 1 ELSE 0 END,status=CASE WHEN NEW.status='ACTIVE' AND status='INACTIVE' THEN 'REPLACEMENT' WHEN NEW.status<>'ACTIVE' THEN 'INACTIVE' ELSE status END WHERE id=(SELECT replacement_vehicle_id FROM vehicle_replacement_records WHERE id=NEW.id);\n  END"
+  },
+  {
+    "name": "replacement_vehicle_update",
+    "sql": "CREATE TRIGGER replacement_vehicle_update AFTER UPDATE OF replacement_plate,status ON vehicle_replacement_records BEGIN \n  SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ','') AND is_replacement=0) THEN RAISE(ABORT,'İkame plakası mevcut ana araçla çakışıyor.') END;\n  SELECT CASE WHEN NEW.status='ACTIVE' AND EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE id<>NEW.id AND status='ACTIVE' AND replace(upper(replacement_plate),' ','')=replace(upper(NEW.replacement_plate),' ','')) THEN RAISE(ABORT,'Bu ikame plaka başka bir aktif süreçte kullanılıyor.') END;\n  INSERT INTO vehicles(id,plate,ownership_type,brand,model,model_year,vehicle_type,tire_storage_dealer,status,is_active,is_replacement,created_at,updated_at)\n   SELECT 'replacement:'||NEW.id,upper(trim(NEW.replacement_plate)),'FLEET','İkame','Araç',CAST(strftime('%Y','now') AS INTEGER),'İkame Araç','—',CASE WHEN NEW.status='ACTIVE' THEN 'REPLACEMENT' ELSE 'INACTIVE' END,CASE WHEN NEW.status='ACTIVE' THEN 1 ELSE 0 END,1,NEW.created_at,NEW.updated_at\n   WHERE NOT EXISTS(SELECT 1 FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ',''));\n  UPDATE vehicle_replacement_records SET replacement_vehicle_id=(SELECT id FROM vehicles WHERE replace(upper(plate),' ','')=replace(upper(NEW.replacement_plate),' ','')) WHERE id=NEW.id;\n  UPDATE vehicles SET is_active=CASE WHEN EXISTS(SELECT 1 FROM vehicle_replacement_records WHERE replacement_vehicle_id=vehicles.id AND status='ACTIVE') THEN 1 ELSE 0 END,status=CASE WHEN NEW.status='ACTIVE' AND status='INACTIVE' THEN 'REPLACEMENT' WHEN NEW.status<>'ACTIVE' THEN 'INACTIVE' ELSE status END WHERE id=(SELECT replacement_vehicle_id FROM vehicle_replacement_records WHERE id=NEW.id);\n  END"
+  },
+  {
+    "name": "replacement_return_guard",
+    "sql": "CREATE TRIGGER replacement_return_guard BEFORE UPDATE OF status ON vehicle_replacement_records WHEN NEW.status<>'ACTIVE' AND OLD.status='ACTIVE' BEGIN\n SELECT CASE WHEN EXISTS(SELECT 1 FROM vehicle_usage_records WHERE vehicle_id=OLD.replacement_vehicle_id AND status='IN_USE' AND return_at IS NULL) THEN RAISE(ABORT,'İkame araç personelde kullanımda. Önce Araç Kullanım / Teslim bölümünden iade alın.') END; END"
+  }
+]

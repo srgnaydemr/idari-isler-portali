@@ -1,0 +1,28 @@
+.next/
+node_modules/
+
+# Gizli ortam dosyaları hiçbir zaman repoya/pakete girmemeli.
+.env*
+!.env.example
+
+*.log
+*.tsbuildinfo
+.DS_Store
+
+# Yanlışlıkla kopyalanan yerel veritabanı/yedek dosyaları.
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# Runtime / kullanıcı verisi kaynak koddan ayrıdır.
+storage/portal.db
+storage/portal.db-wal
+storage/portal.db-shm
+storage/uploads/*
+!storage/uploads/.gitkeep
+storage/branding/*
+!storage/branding/.gitkeep
+storage/backups/*
+!storage/backups/.gitkeep

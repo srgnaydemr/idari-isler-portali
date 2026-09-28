@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function NotFound(){return <div style={{minHeight:"100vh",display:"grid",placeItems:"center",padding:20}}><div className="card" style={{maxWidth:520}}><div className="section-body" style={{textAlign:"center"}}><h1>Kayıt Bulunamadı</h1><p style={{color:"var(--muted)"}}>Aradığınız kayıt kaldırılmış, pasife alınmış veya adres hatalı olabilir.</p><Link className="btn btn-primary" href="/ana-panel">Ana Panele Dön</Link></div></div></div>}

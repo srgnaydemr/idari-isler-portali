@@ -1,0 +1,6975 @@
+[
+  {
+    "name": "users",
+    "sql": "CREATE TABLE users(id TEXT PRIMARY KEY,first_name TEXT,last_name TEXT,username TEXT NOT NULL UNIQUE COLLATE NOCASE,email TEXT NOT NULL UNIQUE COLLATE NOCASE,password_hash TEXT NOT NULL,is_active INTEGER NOT NULL DEFAULT 1,role TEXT NOT NULL DEFAULT 'USER',last_login_at TEXT,created_at TEXT NOT NULL,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "first_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "last_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "username",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "email",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "password_hash",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "role",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'USER'",
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "last_login_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_users_3",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 4,
+            "name": "email"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_users_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 3,
+            "name": "username"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_users_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "sessions",
+    "sql": "CREATE TABLE sessions(id TEXT PRIMARY KEY,user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,token_hash TEXT NOT NULL UNIQUE,created_at TEXT NOT NULL,expires_at TEXT NOT NULL,last_seen_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "user_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "token_hash",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "expires_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "last_seen_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "user_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_sessions_token",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "token_hash"
+          }
+        ],
+        "sql": "CREATE INDEX idx_sessions_token ON sessions(token_hash)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_sessions_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "token_hash"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_sessions_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "login_attempts",
+    "sql": "CREATE TABLE login_attempts(id TEXT PRIMARY KEY,identifier TEXT NOT NULL,ip_address TEXT,success INTEGER NOT NULL DEFAULT 0,attempted_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "identifier",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "ip_address",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "success",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "attempted_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_login_attempts_window",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "identifier"
+          },
+          {
+            "seqno": 1,
+            "cid": 2,
+            "name": "ip_address"
+          },
+          {
+            "seqno": 2,
+            "cid": 4,
+            "name": "attempted_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_login_attempts_window ON login_attempts(identifier,ip_address,attempted_at DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_login_attempts_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicles",
+    "sql": "CREATE TABLE vehicles(id TEXT PRIMARY KEY,plate TEXT NOT NULL UNIQUE COLLATE NOCASE,ownership_type TEXT NOT NULL,brand TEXT NOT NULL,model TEXT NOT NULL,model_year INTEGER NOT NULL,vehicle_type TEXT NOT NULL,fuel_type TEXT,transmission TEXT,color TEXT,vin TEXT UNIQUE COLLATE NOCASE,engine_number TEXT,registration_serial_no TEXT,registration_document_no TEXT,registration_date TEXT,current_odometer INTEGER NOT NULL DEFAULT 0,responsible_person TEXT,status TEXT NOT NULL DEFAULT 'ACTIVE',tire_storage_dealer TEXT NOT NULL,fleet_company TEXT,contract_start_date TEXT,contract_end_date TEXT,contract_km_limit INTEGER,contract_reference TEXT,planned_return_date TEXT,fleet_description TEXT,rental_tracking_enabled INTEGER NOT NULL DEFAULT 0,is_active INTEGER NOT NULL DEFAULT 1,created_by TEXT REFERENCES users(id),updated_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, is_replacement INTEGER NOT NULL DEFAULT 0)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "plate",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "ownership_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "brand",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "model",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "model_year",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "vehicle_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "fuel_type",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "transmission",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "color",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "vin",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "engine_number",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "registration_serial_no",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "registration_document_no",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "registration_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "current_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "responsible_person",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 18,
+        "name": "tire_storage_dealer",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 19,
+        "name": "fleet_company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 20,
+        "name": "contract_start_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 21,
+        "name": "contract_end_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 22,
+        "name": "contract_km_limit",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 23,
+        "name": "contract_reference",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 24,
+        "name": "planned_return_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 25,
+        "name": "fleet_description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 26,
+        "name": "rental_tracking_enabled",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 27,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 28,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 29,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 30,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 31,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 32,
+        "name": "is_replacement",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "updated_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_vehicles_fleet_company",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 19,
+            "name": "fleet_company"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicles_fleet_company ON vehicles(fleet_company)"
+      },
+      {
+        "seq": 1,
+        "name": "idx_vehicles_ownership",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "ownership_type"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicles_ownership ON vehicles(ownership_type)"
+      },
+      {
+        "seq": 2,
+        "name": "idx_vehicles_status",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 17,
+            "name": "status"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicles_status ON vehicles(status)"
+      },
+      {
+        "seq": 3,
+        "name": "idx_vehicles_plate",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "plate"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicles_plate ON vehicles(plate)"
+      },
+      {
+        "seq": 4,
+        "name": "sqlite_autoindex_vehicles_3",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 10,
+            "name": "vin"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 5,
+        "name": "sqlite_autoindex_vehicles_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "plate"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 6,
+        "name": "sqlite_autoindex_vehicles_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_odometer_history",
+    "sql": "CREATE TABLE vehicle_odometer_history(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),previous_odometer INTEGER NOT NULL,new_odometer INTEGER NOT NULL,is_correction INTEGER NOT NULL DEFAULT 0,correction_reason TEXT,description TEXT,recorded_by TEXT REFERENCES users(id),recorded_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "previous_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "new_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "is_correction",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "correction_reason",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "recorded_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "recorded_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "recorded_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_odo_vehicle_date",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 8,
+            "name": "recorded_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_odo_vehicle_date ON vehicle_odometer_history(vehicle_id,recorded_at DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_odometer_history_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_assignments",
+    "sql": "CREATE TABLE vehicle_assignments(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),assigned_to TEXT NOT NULL,delivered_by TEXT,delivery_date TEXT NOT NULL,delivery_odometer INTEGER,vehicle_condition_delivery TEXT,delivery_description TEXT,return_date TEXT,return_odometer INTEGER,returned_to TEXT,vehicle_condition_return TEXT,return_description TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL, personnel_id TEXT, personnel_snapshot TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "assigned_to",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "delivered_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "delivery_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "delivery_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "vehicle_condition_delivery",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "delivery_description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "return_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "return_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "returned_to",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "vehicle_condition_return",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "return_description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "personnel_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "personnel_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_assign_vehicle",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "delivery_date"
+          }
+        ],
+        "sql": "CREATE INDEX idx_assign_vehicle ON vehicle_assignments(vehicle_id,delivery_date DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_assignments_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_status_history",
+    "sql": "CREATE TABLE vehicle_status_history(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),old_status TEXT,new_status TEXT NOT NULL,description TEXT,changed_by TEXT REFERENCES users(id),changed_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "old_status",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "new_status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "changed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "changed_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "changed_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_status_history_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_compliance_documents",
+    "sql": "CREATE TABLE vehicle_compliance_documents(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),document_type TEXT NOT NULL,start_date TEXT,end_date TEXT NOT NULL,description TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "document_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "start_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "end_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_compliance_due_tracking",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "document_type"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "end_date"
+          },
+          {
+            "seqno": 2,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE INDEX idx_compliance_due_tracking ON vehicle_compliance_documents(document_type,end_date,vehicle_id)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_compliance_documents_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_service_appointments",
+    "sql": "CREATE TABLE vehicle_service_appointments(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),planned_date TEXT NOT NULL,service_name TEXT,description TEXT,status TEXT NOT NULL,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "planned_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "service_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_service_appointments_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_maintenance",
+    "sql": "CREATE TABLE vehicle_maintenance(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),maintenance_date TEXT NOT NULL,odometer INTEGER,service_name TEXT,maintenance_type TEXT NOT NULL,description TEXT,cost REAL NOT NULL DEFAULT 0,next_maintenance_odometer INTEGER,next_maintenance_date TEXT,status TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "maintenance_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "service_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "maintenance_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "cost",
+        "type": "REAL",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "next_maintenance_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "next_maintenance_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_maintenance_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_accidents",
+    "sql": "CREATE TABLE vehicle_accidents(id TEXT PRIMARY KEY,file_number TEXT NOT NULL UNIQUE,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),accident_date TEXT NOT NULL,accident_time TEXT,driver TEXT,accident_location TEXT,counterparty_plate TEXT,description TEXT,damage_description TEXT,fault_rate REAL,insurance_company TEXT,insurance_claim_number TEXT,expert_info TEXT,status TEXT NOT NULL DEFAULT 'NEW',estimated_cost REAL DEFAULT 0,actual_cost REAL DEFAULT 0,replacement_vehicle_status TEXT,notes TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "file_number",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "accident_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "accident_time",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "driver",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "accident_location",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "counterparty_plate",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "damage_description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "fault_rate",
+        "type": "REAL",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "insurance_company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "insurance_claim_number",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "expert_info",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'NEW'",
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "estimated_cost",
+        "type": "REAL",
+        "notnull": 0,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "actual_cost",
+        "type": "REAL",
+        "notnull": 0,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "replacement_vehicle_status",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 18,
+        "name": "notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 19,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 20,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 21,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_accidents_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "file_number"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_accidents_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_accident_updates",
+    "sql": "CREATE TABLE vehicle_accident_updates(id TEXT PRIMARY KEY,accident_id TEXT NOT NULL REFERENCES vehicle_accidents(id),note TEXT NOT NULL,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "accident_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "note",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicle_accidents",
+        "from": "accident_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_accident_updates_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_damages",
+    "sql": "CREATE TABLE vehicle_damages(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),damage_date TEXT NOT NULL,odometer INTEGER,damage_type TEXT NOT NULL,damaged_area TEXT,description TEXT,service_name TEXT,cost REAL DEFAULT 0,status TEXT,replacement_plate TEXT,replacement_received_at TEXT,replacement_returned_at TEXT,replacement_company TEXT,replacement_notes TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "damage_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "damage_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "damaged_area",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "service_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "cost",
+        "type": "REAL",
+        "notnull": 0,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "replacement_plate",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "replacement_received_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "replacement_returned_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "replacement_company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "replacement_notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_damage_replacement",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 10,
+            "name": "replacement_plate"
+          }
+        ],
+        "sql": "CREATE INDEX idx_damage_replacement ON vehicle_damages(replacement_plate)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_damages_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_tire_transactions",
+    "sql": "CREATE TABLE vehicle_tire_transactions(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),transaction_date TEXT NOT NULL,odometer INTEGER,tire_type TEXT,brand TEXT,model TEXT,size TEXT,quantity INTEGER NOT NULL DEFAULT 1,transaction_type TEXT NOT NULL,tire_dealer TEXT,storage_dealer TEXT,description TEXT,cost REAL NOT NULL DEFAULT 0,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL, transaction_time TEXT, performed_by_name TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "transaction_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "tire_type",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "brand",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "model",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "size",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "quantity",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "transaction_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "tire_dealer",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "storage_dealer",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "cost",
+        "type": "REAL",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "transaction_time",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "performed_by_name",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_tire_vehicle_history",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 2,
+            "name": "transaction_date"
+          },
+          {
+            "seqno": 2,
+            "cid": 16,
+            "name": "transaction_time"
+          }
+        ],
+        "sql": "CREATE INDEX idx_tire_vehicle_history ON vehicle_tire_transactions(vehicle_id,transaction_date DESC,transaction_time DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_vehicle_tire_transactions_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_traffic_fines",
+    "sql": "CREATE TABLE vehicle_traffic_fines(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),fine_date TEXT NOT NULL,fine_time TEXT,driver TEXT,fine_type TEXT NOT NULL,amount REAL NOT NULL DEFAULT 0,notification_date TEXT,payment_status TEXT NOT NULL DEFAULT 'UNPAID',payment_date TEXT,description TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "fine_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "fine_time",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "driver",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "fine_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "amount",
+        "type": "REAL",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "notification_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "payment_status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'UNPAID'",
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "payment_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_vehicle_traffic_fines_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_service_records",
+    "sql": "CREATE TABLE vehicle_service_records(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),service_in_at TEXT NOT NULL,service_out_at TEXT,service_name TEXT NOT NULL,service_reason TEXT NOT NULL,odometer INTEGER,notes TEXT,cost REAL NOT NULL DEFAULT 0,next_maintenance_date TEXT,next_maintenance_odometer INTEGER,replacement_vehicle_provided INTEGER NOT NULL DEFAULT 0,replacement_plate TEXT,replacement_received_at TEXT,replacement_returned_at TEXT,replacement_company TEXT,replacement_notes TEXT,completion_notes TEXT,previous_vehicle_status TEXT,status TEXT NOT NULL DEFAULT 'OPEN',created_by TEXT REFERENCES users(id),closed_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, service_out_odometer INTEGER)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "service_in_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "service_out_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "service_name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "service_reason",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "cost",
+        "type": "REAL",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "next_maintenance_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "next_maintenance_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "replacement_vehicle_provided",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "replacement_plate",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "replacement_received_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "replacement_returned_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "replacement_company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "replacement_notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "completion_notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 18,
+        "name": "previous_vehicle_status",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 19,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'OPEN'",
+        "pk": 0
+      },
+      {
+        "cid": 20,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 21,
+        "name": "closed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 22,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 23,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 24,
+        "name": "service_out_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "closed_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_service_replacement",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 12,
+            "name": "replacement_plate"
+          }
+        ],
+        "sql": "CREATE INDEX idx_service_replacement ON vehicle_service_records(replacement_plate)"
+      },
+      {
+        "seq": 1,
+        "name": "uq_open_service_per_vehicle",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_open_service_per_vehicle ON vehicle_service_records(vehicle_id) WHERE status='OPEN'"
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_vehicle_service_records_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "attachments",
+    "sql": "CREATE TABLE attachments(id TEXT PRIMARY KEY,entity_type TEXT NOT NULL,entity_id TEXT NOT NULL,description TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,is_active INTEGER NOT NULL DEFAULT 1)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "entity_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "entity_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_attachments_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "attachment_versions",
+    "sql": "CREATE TABLE attachment_versions(id TEXT PRIMARY KEY,attachment_id TEXT NOT NULL REFERENCES attachments(id),version_number INTEGER NOT NULL,storage_path TEXT NOT NULL,original_filename TEXT NOT NULL,mime_type TEXT NOT NULL,file_size INTEGER NOT NULL,uploaded_by TEXT REFERENCES users(id),uploaded_at TEXT NOT NULL,UNIQUE(attachment_id,version_number))",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "attachment_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "version_number",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "storage_path",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "original_filename",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "mime_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "file_size",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "uploaded_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "uploaded_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "uploaded_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "attachments",
+        "from": "attachment_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_attachment_versions_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "attachment_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 2,
+            "name": "version_number"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_attachment_versions_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "tasks",
+    "sql": "CREATE TABLE tasks(id TEXT PRIMARY KEY,title TEXT NOT NULL,description TEXT,assigned_user_id TEXT REFERENCES users(id),start_date TEXT,due_date TEXT,priority TEXT NOT NULL DEFAULT 'NORMAL',status TEXT NOT NULL DEFAULT 'WAITING',created_by TEXT REFERENCES users(id),completed_by TEXT REFERENCES users(id),completed_at TEXT,created_at TEXT NOT NULL,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "title",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "assigned_user_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "start_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "due_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "priority",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'NORMAL'",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'WAITING'",
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "completed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "completed_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "completed_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "users",
+        "from": "assigned_user_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_tasks_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "task_comments",
+    "sql": "CREATE TABLE task_comments(id TEXT PRIMARY KEY,task_id TEXT NOT NULL REFERENCES tasks(id),comment TEXT NOT NULL,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "task_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "comment",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "tasks",
+        "from": "task_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_task_comments_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "task_history",
+    "sql": "CREATE TABLE task_history(id TEXT PRIMARY KEY,task_id TEXT NOT NULL REFERENCES tasks(id),action TEXT NOT NULL,old_value TEXT,new_value TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "task_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "action",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "old_value",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "new_value",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "tasks",
+        "from": "task_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_task_history_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "notifications",
+    "sql": "CREATE TABLE notifications(id TEXT PRIMARY KEY,user_id TEXT REFERENCES users(id),notification_type TEXT NOT NULL,entity_type TEXT NOT NULL,entity_id TEXT NOT NULL,reminder_stage TEXT NOT NULL,title TEXT NOT NULL,message TEXT NOT NULL,severity TEXT NOT NULL DEFAULT 'INFO',severity_rank INTEGER NOT NULL DEFAULT 1,is_read INTEGER NOT NULL DEFAULT 0,read_at TEXT,created_at TEXT NOT NULL, due_date TEXT,UNIQUE(notification_type,entity_type,entity_id,reminder_stage,user_id))",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "user_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "notification_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "entity_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "entity_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "reminder_stage",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "title",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "message",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "severity",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'INFO'",
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "severity_rank",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "is_read",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "read_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "due_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "user_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_notifications_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "notification_type"
+          },
+          {
+            "seqno": 1,
+            "cid": 3,
+            "name": "entity_type"
+          },
+          {
+            "seqno": 2,
+            "cid": 4,
+            "name": "entity_id"
+          },
+          {
+            "seqno": 3,
+            "cid": 5,
+            "name": "reminder_stage"
+          },
+          {
+            "seqno": 4,
+            "cid": 1,
+            "name": "user_id"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_notifications_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "audit_logs",
+    "sql": "CREATE TABLE audit_logs(id TEXT PRIMARY KEY,created_at TEXT NOT NULL,user_id TEXT REFERENCES users(id),user_name_snapshot TEXT,module TEXT NOT NULL,action TEXT NOT NULL,entity_type TEXT,entity_id TEXT,entity_reference TEXT,old_values TEXT,new_values TEXT,description TEXT,ip_address TEXT,request_id TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "user_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "user_name_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "module",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "action",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "entity_type",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "entity_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "entity_reference",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "old_values",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "new_values",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "ip_address",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "request_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "user_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_audit_logs_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "report_catalog",
+    "sql": "CREATE TABLE report_catalog(slug TEXT PRIMARY KEY,name TEXT NOT NULL,report_type TEXT NOT NULL,category TEXT NOT NULL,description TEXT NOT NULL,sort_order INTEGER NOT NULL DEFAULT 100,is_active INTEGER NOT NULL DEFAULT 1,created_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "slug",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "report_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "category",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "sort_order",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "100",
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_report_catalog_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "slug"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "system_settings",
+    "sql": "CREATE TABLE system_settings(setting_key TEXT PRIMARY KEY,setting_value TEXT,setting_label TEXT NOT NULL,updated_by TEXT,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "setting_key",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "setting_value",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "setting_label",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_system_settings_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "setting_key"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "system_definitions",
+    "sql": "CREATE TABLE system_definitions(id TEXT PRIMARY KEY,category TEXT NOT NULL,code TEXT,name TEXT NOT NULL,is_active INTEGER NOT NULL DEFAULT 1,sort_order INTEGER NOT NULL DEFAULT 100,is_system INTEGER NOT NULL DEFAULT 0,created_at TEXT NOT NULL,updated_at TEXT NOT NULL,UNIQUE(category,name COLLATE NOCASE))",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "category",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "code",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "sort_order",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "100",
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "is_system",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_def_category",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "category"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "is_active"
+          },
+          {
+            "seqno": 2,
+            "cid": 5,
+            "name": "sort_order"
+          }
+        ],
+        "sql": "CREATE INDEX idx_def_category ON system_definitions(category,is_active,sort_order)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_system_definitions_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "category"
+          },
+          {
+            "seqno": 1,
+            "cid": 3,
+            "name": "name"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_system_definitions_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "alert_settings",
+    "sql": "CREATE TABLE alert_settings(setting_key TEXT PRIMARY KEY,label TEXT NOT NULL,days_before INTEGER NOT NULL DEFAULT 30,is_active INTEGER NOT NULL DEFAULT 1,updated_by TEXT,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "setting_key",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "label",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "days_before",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "30",
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_alert_settings_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "setting_key"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "dashboard_settings",
+    "sql": "CREATE TABLE dashboard_settings(card_key TEXT PRIMARY KEY,label TEXT NOT NULL,is_visible INTEGER NOT NULL DEFAULT 1,sort_order INTEGER NOT NULL DEFAULT 100,updated_by TEXT,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "card_key",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "label",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "is_visible",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "sort_order",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "100",
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_dashboard_settings_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "card_key"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "menu_settings",
+    "sql": "CREATE TABLE menu_settings(menu_key TEXT PRIMARY KEY,label TEXT NOT NULL,href TEXT NOT NULL,is_visible INTEGER NOT NULL DEFAULT 1,sort_order INTEGER NOT NULL DEFAULT 100,is_system INTEGER NOT NULL DEFAULT 0,updated_by TEXT,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "menu_key",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "label",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "href",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "is_visible",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "sort_order",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "100",
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "is_system",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_menu_settings_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "menu_key"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "personnel",
+    "sql": "CREATE TABLE personnel(id TEXT PRIMARY KEY,first_name TEXT NOT NULL,last_name TEXT NOT NULL,employee_no TEXT UNIQUE COLLATE NOCASE,department TEXT,title TEXT,status TEXT NOT NULL DEFAULT 'ACTIVE',deleted_at TEXT,created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, phone TEXT, company TEXT, branch TEXT, requested_documents TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "first_name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "last_name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "employee_no",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "department",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "title",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "deleted_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "phone",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "branch",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "requested_documents",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_personnel_department",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 4,
+            "name": "department"
+          },
+          {
+            "seqno": 1,
+            "cid": 6,
+            "name": "status"
+          }
+        ],
+        "sql": "CREATE INDEX idx_personnel_department ON personnel(department,status)"
+      },
+      {
+        "seq": 1,
+        "name": "idx_personnel_name",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "last_name"
+          },
+          {
+            "seqno": 1,
+            "cid": 1,
+            "name": "first_name"
+          }
+        ],
+        "sql": "CREATE INDEX idx_personnel_name ON personnel(last_name,first_name)"
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_personnel_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 3,
+            "name": "employee_no"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 3,
+        "name": "sqlite_autoindex_personnel_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "equipment",
+    "sql": "CREATE TABLE equipment(id TEXT PRIMARY KEY,equipment_type TEXT NOT NULL,brand TEXT,model TEXT,serial_number TEXT,imei TEXT,imei2 TEXT,asset_tag TEXT,screen_size TEXT,device_subtype TEXT,description TEXT,status TEXT NOT NULL DEFAULT 'AVAILABLE',created_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "equipment_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "brand",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "model",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "serial_number",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "imei",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "imei2",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "asset_tag",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "screen_size",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "device_subtype",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'AVAILABLE'",
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_equipment_status",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 11,
+            "name": "status"
+          },
+          {
+            "seqno": 1,
+            "cid": 1,
+            "name": "equipment_type"
+          }
+        ],
+        "sql": "CREATE INDEX idx_equipment_status ON equipment(status,equipment_type)"
+      },
+      {
+        "seq": 1,
+        "name": "uq_equipment_asset",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 7,
+            "name": "asset_tag"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_equipment_asset ON equipment(asset_tag COLLATE NOCASE) WHERE asset_tag IS NOT NULL AND trim(asset_tag)<>''"
+      },
+      {
+        "seq": 2,
+        "name": "uq_equipment_imei2",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 6,
+            "name": "imei2"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_equipment_imei2 ON equipment(imei2 COLLATE NOCASE) WHERE imei2 IS NOT NULL AND trim(imei2)<>''"
+      },
+      {
+        "seq": 3,
+        "name": "uq_equipment_imei",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 5,
+            "name": "imei"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_equipment_imei ON equipment(imei COLLATE NOCASE) WHERE imei IS NOT NULL AND trim(imei)<>''"
+      },
+      {
+        "seq": 4,
+        "name": "uq_equipment_serial",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 4,
+            "name": "serial_number"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_equipment_serial ON equipment(serial_number COLLATE NOCASE) WHERE serial_number IS NOT NULL AND trim(serial_number)<>''"
+      },
+      {
+        "seq": 5,
+        "name": "sqlite_autoindex_equipment_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "personnel_assignments",
+    "sql": "CREATE TABLE personnel_assignments(id TEXT PRIMARY KEY,personnel_id TEXT NOT NULL REFERENCES personnel(id),equipment_id TEXT NOT NULL REFERENCES equipment(id),assignment_date TEXT NOT NULL,planned_return_date TEXT,return_date TEXT,status TEXT NOT NULL DEFAULT 'ACTIVE',description TEXT,return_note TEXT,created_by TEXT REFERENCES users(id),returned_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, personnel_snapshot TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "personnel_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "equipment_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "assignment_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "planned_return_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "return_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "return_note",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "returned_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "personnel_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "returned_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "equipment",
+        "from": "equipment_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 3,
+        "seq": 0,
+        "table": "personnel",
+        "from": "personnel_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_personnel_assignments_person",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "personnel_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 3,
+            "name": "assignment_date"
+          }
+        ],
+        "sql": "CREATE INDEX idx_personnel_assignments_person ON personnel_assignments(personnel_id,assignment_date DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "uq_equipment_active_assignment",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "equipment_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_equipment_active_assignment ON personnel_assignments(equipment_id) WHERE return_date IS NULL AND status='ACTIVE'"
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_personnel_assignments_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_usage_records",
+    "sql": "CREATE TABLE vehicle_usage_records(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),personnel_id TEXT NOT NULL REFERENCES personnel(id),personnel_name_snapshot TEXT NOT NULL,department_snapshot TEXT,checkout_at TEXT NOT NULL,checkout_odometer INTEGER NOT NULL,return_at TEXT,return_odometer INTEGER,purpose TEXT,description TEXT,return_note TEXT,status TEXT NOT NULL DEFAULT 'IN_USE',created_by TEXT REFERENCES users(id),returned_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, personnel_snapshot TEXT, replacement_record_id TEXT, main_plate_snapshot TEXT, checkout_km_known INTEGER NOT NULL DEFAULT 1)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "personnel_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "personnel_name_snapshot",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "department_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "checkout_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "checkout_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "return_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "return_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "purpose",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "description",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "return_note",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'IN_USE'",
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "returned_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 16,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 17,
+        "name": "personnel_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 18,
+        "name": "replacement_record_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 19,
+        "name": "main_plate_snapshot",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 20,
+        "name": "checkout_km_known",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "returned_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "personnel",
+        "from": "personnel_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 3,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_vehicle_usage_person_date",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "personnel_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 5,
+            "name": "checkout_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicle_usage_person_date ON vehicle_usage_records(personnel_id,checkout_at DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "idx_vehicle_usage_vehicle_date",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 5,
+            "name": "checkout_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicle_usage_vehicle_date ON vehicle_usage_records(vehicle_id,checkout_at DESC)"
+      },
+      {
+        "seq": 2,
+        "name": "uq_vehicle_usage_active",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_vehicle_usage_active ON vehicle_usage_records(vehicle_id) WHERE status='IN_USE' AND return_at IS NULL"
+      },
+      {
+        "seq": 3,
+        "name": "sqlite_autoindex_vehicle_usage_records_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_replacement_records",
+    "sql": "CREATE TABLE vehicle_replacement_records(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL REFERENCES vehicles(id),source_type TEXT NOT NULL,source_id TEXT NOT NULL,replacement_plate TEXT NOT NULL,replacement_received_at TEXT,replacement_returned_at TEXT,replacement_company TEXT,replacement_notes TEXT,status TEXT NOT NULL DEFAULT 'ACTIVE',created_by TEXT REFERENCES users(id),updated_by TEXT REFERENCES users(id),created_at TEXT NOT NULL,updated_at TEXT NOT NULL, replacement_vehicle_id TEXT, replacement_odometer INTEGER)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "source_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "source_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "replacement_plate",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "replacement_received_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "replacement_returned_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "replacement_company",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "replacement_notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "updated_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "replacement_vehicle_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "replacement_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "updated_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": -1,
+        "name": "idx_replacement_source",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "source_type"
+          },
+          {
+            "seqno": 1,
+            "cid": 3,
+            "name": "source_id"
+          },
+          {
+            "seqno": 2,
+            "cid": 9,
+            "name": "status"
+          },
+          {
+            "seqno": 3,
+            "cid": 13,
+            "name": "created_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_replacement_source ON vehicle_replacement_records(source_type,source_id,status,created_at)"
+      },
+      {
+        "seq": 0,
+        "name": "idx_replacement_plate_history",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 4,
+            "name": "replacement_plate"
+          },
+          {
+            "seqno": 1,
+            "cid": 5,
+            "name": "replacement_received_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_replacement_plate_history ON vehicle_replacement_records(replacement_plate, replacement_received_at DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "idx_replacement_plate",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 4,
+            "name": "replacement_plate"
+          }
+        ],
+        "sql": "CREATE INDEX idx_replacement_plate ON vehicle_replacement_records(replacement_plate)"
+      },
+      {
+        "seq": 2,
+        "name": "idx_replacement_vehicle",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 5,
+            "name": "replacement_received_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_replacement_vehicle ON vehicle_replacement_records(vehicle_id,replacement_received_at DESC)"
+      },
+      {
+        "seq": 4,
+        "name": "sqlite_autoindex_vehicle_replacement_records_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "application_errors",
+    "sql": "CREATE TABLE application_errors(id TEXT PRIMARY KEY,created_at TEXT NOT NULL,area TEXT,error_code TEXT,message TEXT,details TEXT,user_id TEXT REFERENCES users(id))",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "area",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "error_code",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "message",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "details",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "user_id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "user_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_application_errors_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "case_services",
+    "sql": "CREATE TABLE case_services (\n    id TEXT PRIMARY KEY, vehicle_id TEXT NOT NULL REFERENCES vehicles(id),\n    source_type TEXT NOT NULL CHECK(source_type IN ('ACCIDENT','DAMAGE')), source_id TEXT NOT NULL,\n    service_name TEXT NOT NULL, entry_at TEXT NOT NULL, entry_km INTEGER NOT NULL CHECK(entry_km>=0), entry_note TEXT,\n    exit_at TEXT, exit_km INTEGER CHECK(exit_km>=entry_km), exit_note TEXT,\n    created_at TEXT NOT NULL, completed_at TEXT, created_by TEXT REFERENCES users(id)\n  )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "source_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "source_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "service_name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "entry_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "entry_km",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "entry_note",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "exit_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "exit_km",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "exit_note",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "completed_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "one_case_service",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX one_case_service ON case_services(vehicle_id) WHERE exit_at IS NULL"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_case_services_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_events",
+    "sql": "CREATE TABLE vehicle_events (id INTEGER PRIMARY KEY AUTOINCREMENT,vehicle_id TEXT NOT NULL,created_at TEXT NOT NULL,entity_type TEXT NOT NULL,entity_id TEXT NOT NULL,title TEXT NOT NULL,details TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "entity_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "entity_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "title",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "details",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "vehicle_events_order",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 2,
+            "name": "created_at"
+          },
+          {
+            "seqno": 2,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": "CREATE INDEX vehicle_events_order ON vehicle_events(vehicle_id,created_at DESC,id DESC)"
+      }
+    ]
+  },
+  {
+    "name": "equipment_asset_sequences",
+    "sql": "CREATE TABLE equipment_asset_sequences (\n      equipment_code TEXT PRIMARY KEY,\n      prefix TEXT NOT NULL UNIQUE,\n      last_number INTEGER NOT NULL DEFAULT 0,\n      updated_at TEXT NOT NULL\n    )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "equipment_code",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "prefix",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "last_number",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "0",
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_equipment_asset_sequences_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "prefix"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_equipment_asset_sequences_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "equipment_code"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_rental_contracts",
+    "sql": "CREATE TABLE vehicle_rental_contracts(\n      id TEXT PRIMARY KEY,\n      vehicle_id TEXT NOT NULL REFERENCES vehicles(id),\n      fleet_company TEXT NOT NULL,\n      start_date TEXT NOT NULL,\n      end_date TEXT NOT NULL,\n      start_odometer INTEGER NOT NULL CHECK(start_odometer>=0),\n      total_km_allowance INTEGER NOT NULL CHECK(total_km_allowance>=0),\n      status TEXT NOT NULL DEFAULT 'ACTIVE',\n      notes TEXT,\n      created_by TEXT REFERENCES users(id),\n      closed_by TEXT REFERENCES users(id),\n      closed_at TEXT,\n      end_odometer INTEGER,\n      created_at TEXT NOT NULL,\n      updated_at TEXT NOT NULL\n    , reference_source TEXT NOT NULL DEFAULT 'AUTO')",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "fleet_company",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "start_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "end_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "start_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "total_km_allowance",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "closed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "closed_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "end_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 13,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 14,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 15,
+        "name": "reference_source",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'AUTO'",
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "closed_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "uq_rental_contract_active_vehicle",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_rental_contract_active_vehicle ON vehicle_rental_contracts(vehicle_id) WHERE status='ACTIVE'"
+      },
+      {
+        "seq": 1,
+        "name": "idx_rental_contract_due",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 7,
+            "name": "status"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "end_date"
+          }
+        ],
+        "sql": "CREATE INDEX idx_rental_contract_due ON vehicle_rental_contracts(status,end_date)"
+      },
+      {
+        "seq": 2,
+        "name": "idx_rental_contract_vehicle",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 3,
+            "name": "start_date"
+          },
+          {
+            "seqno": 2,
+            "cid": 13,
+            "name": "created_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_rental_contract_vehicle ON vehicle_rental_contracts(vehicle_id,start_date DESC,created_at DESC)"
+      },
+      {
+        "seq": 3,
+        "name": "sqlite_autoindex_vehicle_rental_contracts_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "rental_km_pools",
+    "sql": "CREATE TABLE rental_km_pools(\n      id TEXT PRIMARY KEY,\n      name TEXT NOT NULL,\n      fleet_company TEXT NOT NULL,\n      start_date TEXT NOT NULL,\n      end_date TEXT NOT NULL,\n      total_km_allowance INTEGER NOT NULL CHECK(total_km_allowance>=0),\n      status TEXT NOT NULL DEFAULT 'ACTIVE',\n      notes TEXT,\n      created_by TEXT REFERENCES users(id),\n      closed_by TEXT REFERENCES users(id),\n      closed_at TEXT,\n      created_at TEXT NOT NULL,\n      updated_at TEXT NOT NULL\n    )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "name",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "fleet_company",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "start_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "end_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "total_km_allowance",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "status",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'ACTIVE'",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "notes",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "closed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 10,
+        "name": "closed_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 11,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 12,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "closed_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_rental_km_pools_status",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 6,
+            "name": "status"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "end_date"
+          }
+        ],
+        "sql": "CREATE INDEX idx_rental_km_pools_status ON rental_km_pools(status,end_date)"
+      },
+      {
+        "seq": 1,
+        "name": "sqlite_autoindex_rental_km_pools_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "rental_km_pool_members",
+    "sql": "CREATE TABLE rental_km_pool_members(\n      id TEXT PRIMARY KEY,\n      pool_id TEXT NOT NULL REFERENCES rental_km_pools(id),\n      vehicle_id TEXT NOT NULL REFERENCES vehicles(id),\n      reference_odometer INTEGER NOT NULL CHECK(reference_odometer>=0),\n      joined_at TEXT NOT NULL,\n      left_at TEXT,\n      exit_odometer INTEGER,\n      created_by TEXT REFERENCES users(id),\n      created_at TEXT NOT NULL\n    )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "pool_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "reference_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "joined_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "left_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "exit_odometer",
+        "type": "INTEGER",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 2,
+        "seq": 0,
+        "table": "rental_km_pools",
+        "from": "pool_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "uq_rental_km_pool_active_vehicle",
+        "unique": 1,
+        "origin": "c",
+        "partial": 1,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_rental_km_pool_active_vehicle ON rental_km_pool_members(vehicle_id) WHERE left_at IS NULL"
+      },
+      {
+        "seq": 1,
+        "name": "idx_rental_km_pool_members_vehicle",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "joined_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_rental_km_pool_members_vehicle ON rental_km_pool_members(vehicle_id,joined_at)"
+      },
+      {
+        "seq": 2,
+        "name": "idx_rental_km_pool_members_pool",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "pool_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 4,
+            "name": "joined_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_rental_km_pool_members_pool ON rental_km_pool_members(pool_id,joined_at)"
+      },
+      {
+        "seq": 3,
+        "name": "sqlite_autoindex_rental_km_pool_members_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_qr_codes",
+    "sql": "CREATE TABLE vehicle_qr_codes(\n      id TEXT PRIMARY KEY,\n      vehicle_id TEXT NOT NULL UNIQUE REFERENCES vehicles(id) ON DELETE CASCADE,\n      token TEXT NOT NULL UNIQUE,\n      is_active INTEGER NOT NULL DEFAULT 1,\n      created_by TEXT REFERENCES users(id),\n      created_at TEXT NOT NULL,\n      updated_at TEXT NOT NULL,\n      rotated_at TEXT,\n      disabled_at TEXT,\n      last_used_at TEXT\n    )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "token",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "is_active",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": "1",
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "created_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "updated_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "rotated_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "disabled_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "last_used_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "users",
+        "from": "created_by",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_vehicle_qr_active",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 3,
+            "name": "is_active"
+          },
+          {
+            "seqno": 1,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicle_qr_active ON vehicle_qr_codes(is_active,vehicle_id)"
+      },
+      {
+        "seq": 1,
+        "name": "uq_vehicle_qr_token",
+        "unique": 1,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "token"
+          }
+        ],
+        "sql": "CREATE UNIQUE INDEX uq_vehicle_qr_token ON vehicle_qr_codes(token)"
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_vehicle_qr_codes_3",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "token"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 3,
+        "name": "sqlite_autoindex_vehicle_qr_codes_2",
+        "unique": 1,
+        "origin": "u",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "vehicle_id"
+          }
+        ],
+        "sql": null
+      },
+      {
+        "seq": 4,
+        "name": "sqlite_autoindex_vehicle_qr_codes_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "vehicle_qr_km_updates",
+    "sql": "CREATE TABLE vehicle_qr_km_updates(\n      id TEXT PRIMARY KEY,\n      qr_id TEXT NOT NULL REFERENCES vehicle_qr_codes(id),\n      vehicle_id TEXT NOT NULL REFERENCES vehicles(id),\n      previous_odometer INTEGER NOT NULL,\n      new_odometer INTEGER NOT NULL,\n      difference INTEGER NOT NULL,\n      source TEXT NOT NULL DEFAULT 'QR',\n      ip_address TEXT,\n      user_agent TEXT,\n      created_at TEXT NOT NULL\n    )",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "qr_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "previous_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "new_odometer",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "difference",
+        "type": "INTEGER",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "source",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": "'QR'",
+        "pk": 0
+      },
+      {
+        "cid": 7,
+        "name": "ip_address",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 8,
+        "name": "user_agent",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 9,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [
+      {
+        "id": 0,
+        "seq": 0,
+        "table": "vehicles",
+        "from": "vehicle_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      },
+      {
+        "id": 1,
+        "seq": 0,
+        "table": "vehicle_qr_codes",
+        "from": "qr_id",
+        "to": "id",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION",
+        "match": "NONE"
+      }
+    ],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "idx_vehicle_qr_updates_qr",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 1,
+            "name": "qr_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 9,
+            "name": "created_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicle_qr_updates_qr ON vehicle_qr_km_updates(qr_id,created_at DESC)"
+      },
+      {
+        "seq": 1,
+        "name": "idx_vehicle_qr_updates_vehicle",
+        "unique": 0,
+        "origin": "c",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 2,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 9,
+            "name": "created_at"
+          }
+        ],
+        "sql": "CREATE INDEX idx_vehicle_qr_updates_vehicle ON vehicle_qr_km_updates(vehicle_id,created_at DESC)"
+      },
+      {
+        "seq": 2,
+        "name": "sqlite_autoindex_vehicle_qr_km_updates_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "compliance_current",
+    "sql": "CREATE TABLE compliance_current(vehicle_id TEXT NOT NULL,document_type TEXT NOT NULL,document_id TEXT NOT NULL,PRIMARY KEY(vehicle_id,document_type))",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "document_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 2
+      },
+      {
+        "cid": 2,
+        "name": "document_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_compliance_current_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "vehicle_id"
+          },
+          {
+            "seqno": 1,
+            "cid": 1,
+            "name": "document_type"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "import_previews",
+    "sql": "CREATE TABLE import_previews(id TEXT PRIMARY KEY,user_id TEXT NOT NULL,kind TEXT NOT NULL,payload TEXT NOT NULL,created_at TEXT NOT NULL,applied_at TEXT,result TEXT)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "user_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "kind",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "payload",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "created_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "applied_at",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "result",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_import_previews_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  },
+  {
+    "name": "compliance_change_history",
+    "sql": "CREATE TABLE compliance_change_history(id TEXT PRIMARY KEY,vehicle_id TEXT NOT NULL,document_type TEXT NOT NULL,old_date TEXT,new_date TEXT NOT NULL,changed_by TEXT,changed_at TEXT NOT NULL)",
+    "columns": [
+      {
+        "cid": 0,
+        "name": "id",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 1
+      },
+      {
+        "cid": 1,
+        "name": "vehicle_id",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 2,
+        "name": "document_type",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 3,
+        "name": "old_date",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 4,
+        "name": "new_date",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 5,
+        "name": "changed_by",
+        "type": "TEXT",
+        "notnull": 0,
+        "dflt_value": null,
+        "pk": 0
+      },
+      {
+        "cid": 6,
+        "name": "changed_at",
+        "type": "TEXT",
+        "notnull": 1,
+        "dflt_value": null,
+        "pk": 0
+      }
+    ],
+    "fks": [],
+    "indexes": [
+      {
+        "seq": 0,
+        "name": "sqlite_autoindex_compliance_change_history_1",
+        "unique": 1,
+        "origin": "pk",
+        "partial": 0,
+        "columns": [
+          {
+            "seqno": 0,
+            "cid": 0,
+            "name": "id"
+          }
+        ],
+        "sql": null
+      }
+    ]
+  }
+]

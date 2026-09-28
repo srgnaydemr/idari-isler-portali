@@ -1,0 +1,36 @@
+{
+  "name": "idari-isler-portali",
+  "version": "2.15.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build --webpack",
+    "start": "node --env-file-if-exists=.env scripts/mysql-init.cjs && next start",
+    "typecheck": "tsc --noEmit",
+    "backup": "node --env-file-if-exists=.env scripts/mysql-backup.cjs",
+    "restore": "node --env-file-if-exists=.env scripts/mysql-restore.cjs",
+    "test": "node --env-file-if-exists=.env scripts/test-safe-updates.cjs",
+    "mysql:init": "node --env-file-if-exists=.env scripts/mysql-init.cjs",
+    "mysql:migrate": "node --env-file-if-exists=.env scripts/sqlite-to-mysql.cjs",
+    "preflight": "node scripts/hosting-preflight.cjs",
+    "preflight:static": "node scripts/hosting-preflight.cjs --static"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0",
+    "lucide-react": "1.46.0",
+    "mysql2": "3.24.4",
+    "next": "16.3.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.5.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

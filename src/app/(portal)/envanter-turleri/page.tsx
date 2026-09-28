@@ -1,0 +1,10 @@
+import Link from 'next/link';
+import {requireUser} from '@/lib/auth';
+import {getDatabase} from '@/lib/local/database';
+export default async function Page({searchParams}:{searchParams:Promise<{error?:string;saved?:string}>}){
+ await requireUser();const sp=await searchParams;
+ const rows=getDatabase().prepare("SELECT d.*,(SELECT count(*) FROM equipment e WHERE e.equipment_type=d.name COLLATE NOCASE) usage_count FROM system_definitions d WHERE category='equipment_type' ORDER BY is_active DESC,sort_order,name").all() as any[];
+ return <><Link href="/personel-zimmetleri?tab=inventory">← Envanter</Link><h1 className="page-title">Ekipman Türleri</h1>{sp.error?<div className="error-box">{sp.error}</div>:null}{sp.saved?<div className="success-box">Değişiklik kaydedildi.</div>:null}<p>Pasif türler yeni ekipman seçiminde görünmez. Bağlı kayıtlar korunur.</p>
+ <form action="/api/equipment-types" method="post" className="filters"><input name="operation" value="create" type="hidden"/><input className="input" name="name" placeholder="Yeni ekipman türü" required maxLength={100}/><button className="btn btn-primary">Tür Ekle</button></form>
+ <section className="card table-wrap"><table className="table"><thead><tr><th>Tür</th><th>Kullanıldığı kayıt</th><th>Durum</th><th>İşlem</th></tr></thead><tbody>{rows.map(r=><tr key={r.id}><td><form action="/api/equipment-types" method="post" className="row-actions"><input type="hidden" name="id" value={r.id}/><input type="hidden" name="operation" value="rename"/><input className="input" name="name" defaultValue={r.name} required maxLength={100}/><button className="btn btn-secondary">Düzenle</button></form></td><td>{r.usage_count}</td><td>{r.is_active?'Aktif':'Pasif'}</td><td><form action="/api/equipment-types" method="post" className="row-actions"><input type="hidden" name="id" value={r.id}/><button className="btn btn-secondary" name="operation" value={r.is_active?'deactivate':'activate'}>{r.is_active?'Pasif Yap':'Aktifleştir'}</button>{r.is_active?<button className="btn btn-secondary" name="operation" value="delete">Listeden Kaldır</button>:null}</form></td></tr>)}</tbody></table></section></>;
+}

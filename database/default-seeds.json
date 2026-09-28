@@ -1,0 +1,1399 @@
+{
+  "system_settings": [
+    {
+      "setting_key": "portal_name",
+      "setting_value": "İdari İşler Portalı",
+      "setting_label": "Portal adı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "company_name",
+      "setting_value": "Nil Global Altın Ticaret A.Ş.",
+      "setting_label": "Şirket adı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "system_description",
+      "setting_value": "Operasyon Yönetim Portalı",
+      "setting_label": "Sistem açıklaması",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "dashboard_title",
+      "setting_value": "Ana Panel",
+      "setting_label": "Dashboard başlığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_font_family",
+      "setting_value": "Urbanist, sans-serif",
+      "setting_label": "Yazı tipi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_base_font_size",
+      "setting_value": "14",
+      "setting_label": "Ana font boyutu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_menu_font_size",
+      "setting_value": "14",
+      "setting_label": "Menü font boyutu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_table_font_size",
+      "setting_value": "14",
+      "setting_label": "Tablo font boyutu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_page_title_size",
+      "setting_value": "27",
+      "setting_label": "Sayfa başlığı boyutu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_heading_weight",
+      "setting_value": "800",
+      "setting_label": "Başlık font ağırlığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_button_height",
+      "setting_value": "40",
+      "setting_label": "Buton yüksekliği",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_input_height",
+      "setting_value": "42",
+      "setting_label": "Input yüksekliği",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_table_row_padding",
+      "setting_value": "12",
+      "setting_label": "Tablo satır iç boşluğu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_card_gap",
+      "setting_value": "13",
+      "setting_label": "Kart aralığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_primary",
+      "setting_value": "#17324d",
+      "setting_label": "Ana vurgu rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_primary_hover",
+      "setting_value": "#0f2539",
+      "setting_label": "Ana vurgu hover",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_background",
+      "setting_value": "#f5f7fa",
+      "setting_label": "Ana arka plan",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_surface",
+      "setting_value": "#ffffff",
+      "setting_label": "Kart arka planı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_sidebar",
+      "setting_value": "#102a43",
+      "setting_label": "Sidebar rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_sidebar_text",
+      "setting_value": "#dce7f0",
+      "setting_label": "Sidebar yazı rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_active_menu",
+      "setting_value": "#244d73",
+      "setting_label": "Aktif menü rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_header",
+      "setting_value": "#ffffff",
+      "setting_label": "Header rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_border",
+      "setting_value": "#e3e8ef",
+      "setting_label": "Border rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_text",
+      "setting_value": "#172033",
+      "setting_label": "Ana yazı rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_muted",
+      "setting_value": "#667085",
+      "setting_label": "İkincil yazı rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_success",
+      "setting_value": "#16824b",
+      "setting_label": "Başarı rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_warning",
+      "setting_value": "#b96200",
+      "setting_label": "Uyarı rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_danger",
+      "setting_value": "#c73636",
+      "setting_label": "Hata rengi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_card_radius",
+      "setting_value": "14",
+      "setting_label": "Kart köşe yuvarlaklığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_button_radius",
+      "setting_value": "10",
+      "setting_label": "Buton köşe yuvarlaklığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_input_radius",
+      "setting_value": "10",
+      "setting_label": "Input köşe yuvarlaklığı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_card_padding",
+      "setting_value": "18",
+      "setting_label": "Kart iç boşluğu",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_shadow",
+      "setting_value": "0 8px 26px rgba(16,42,67,.07)",
+      "setting_label": "Kart gölgesi",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "theme_table_zebra",
+      "setting_value": "0",
+      "setting_label": "Tablo zebra görünümü",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "portal_version",
+      "setting_value": "2.15.0",
+      "setting_label": "Portal sürümü",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.043Z"
+    },
+    {
+      "setting_key": "rental_contract_due_thresholds",
+      "setting_value": "60,30,15,7",
+      "setting_label": "Kiralık araç sözleşme bitiş bildirim eşikleri",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "setting_key": "qr_high_km_warning_delta",
+      "setting_value": "10000",
+      "setting_label": "QR olağandışı KM artışı uyarı eşiği",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.041Z"
+    },
+    {
+      "setting_key": "qr_stale_alert_enabled",
+      "setting_value": "0",
+      "setting_label": "Uzun süredir KM güncellenmeyen araç uyarısı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.041Z"
+    },
+    {
+      "setting_key": "qr_stale_days",
+      "setting_value": "21",
+      "setting_label": "KM güncelliği gecikme günü",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.041Z"
+    },
+    {
+      "setting_key": "rental_usage_window_days",
+      "setting_value": "30",
+      "setting_label": "Kiralık araç kullanım trendi gün sayısı",
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.043Z"
+    }
+  ],
+  "system_definitions": [
+    {
+      "id": "427527b4-b0e7-425c-82bf-2f90ddb58155",
+      "category": "fleet_company",
+      "code": "GARANTI_FILO",
+      "name": "Garanti Filo",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "ba4414e8-6a73-402b-8127-9adfa24c11ec",
+      "category": "fleet_company",
+      "code": "VDF_FILO",
+      "name": "VDF Filo",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "90594e28-929f-4789-ba42-1da7e855b433",
+      "category": "vehicle_type",
+      "code": "SEDAN",
+      "name": "Sedan",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "dd391082-8cbe-4a25-8ae6-e02833f74297",
+      "category": "vehicle_type",
+      "code": "SUV",
+      "name": "SUV",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "fc9c7c11-ffa7-41ce-a57e-57ac884a1b91",
+      "category": "vehicle_type",
+      "code": "HAFIF_TICARI",
+      "name": "Hafif Ticari",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "582acf69-4b1a-4bef-8bc1-bfec9d0a0bbe",
+      "category": "fuel_type",
+      "code": "BENZIN",
+      "name": "Benzin",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "2d454330-25d6-4de8-b339-2739c3d462e9",
+      "category": "fuel_type",
+      "code": "DIZEL",
+      "name": "Dizel",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "1e6acf6e-3e69-464c-85a1-1133aa4136a6",
+      "category": "fuel_type",
+      "code": "HIBRIT",
+      "name": "Hibrit",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "25e58020-e95f-4a4b-af1c-8612deb08eaa",
+      "category": "fuel_type",
+      "code": "ELEKTRIK",
+      "name": "Elektrik",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "e5de338e-301b-4815-9be9-d4a575bd57ec",
+      "category": "transmission",
+      "code": "OTOMATIK",
+      "name": "Otomatik",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "98b2c37d-410c-498a-85a1-7f0893f3875e",
+      "category": "transmission",
+      "code": "MANUEL",
+      "name": "Manuel",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "7a329b8a-3c84-4b5d-8829-3934066566c6",
+      "category": "document_type",
+      "code": "INSPECTION",
+      "name": "Muayene",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "03c5a559-421a-4df8-b556-d1df487c418a",
+      "category": "document_type",
+      "code": "TRAFFIC_INSURANCE",
+      "name": "Trafik Sigortası",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "bd5ac0f5-6c63-4a89-b546-6c4f1b45f889",
+      "category": "document_type",
+      "code": "CASCO",
+      "name": "Kasko",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "8bef9704-dfd6-412e-a7e5-5172954e1c29",
+      "category": "maintenance_type",
+      "code": "PERIODIC",
+      "name": "Periyodik Bakım",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "776eab61-146d-4b0f-8093-3bc4523b51b5",
+      "category": "maintenance_type",
+      "code": "REPAIR",
+      "name": "Onarım",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "375d4d48-f60f-457d-bf16-0a6ef00e50ef",
+      "category": "damage_type",
+      "code": "ACCIDENT",
+      "name": "Kaza",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "a9366556-93c8-4d6c-b60b-a49fcfe1d073",
+      "category": "damage_type",
+      "code": "DAMAGE",
+      "name": "Hasar",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "aabc22ef-1a7f-4b46-8d37-39284ec4d780",
+      "category": "vehicle_status",
+      "code": "ACTIVE",
+      "name": "Boşta",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "48a6423f-1a3e-4484-b63d-5596b70942ab",
+      "category": "vehicle_status",
+      "code": "ASSIGNED",
+      "name": "Zimmetli",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "ba782de6-8364-47c8-a06e-a7612d9fb369",
+      "category": "vehicle_status",
+      "code": "SERVICE",
+      "name": "Serviste",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "dc6ff367-10cd-4126-9f9e-629489c5a419",
+      "category": "vehicle_status",
+      "code": "MAINTENANCE",
+      "name": "Bakımda",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "ba109882-b832-4980-a0fd-79d330fd37b7",
+      "category": "vehicle_status",
+      "code": "DAMAGED",
+      "name": "Hasarda",
+      "is_active": 1,
+      "sort_order": 50,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "925f10d4-5dfd-4ddb-bc41-2a5a7482d805",
+      "category": "vehicle_status",
+      "code": "INACTIVE",
+      "name": "Kullanım Dışı",
+      "is_active": 1,
+      "sort_order": 60,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "9637d430-50cd-4f7f-bb4a-a9e3dfdd6c42",
+      "category": "equipment_type",
+      "code": "PHONE",
+      "name": "Telefon",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "967bbf58-efac-4850-a71c-4b570e5ea5fd",
+      "category": "equipment_type",
+      "code": "TABLET",
+      "name": "Tablet",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "39f94c5a-6b55-49d7-add8-343f7581a778",
+      "category": "equipment_type",
+      "code": "LAPTOP",
+      "name": "Laptop",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "d115d8f8-d1ab-4216-89a4-aff73cbef9b2",
+      "category": "equipment_type",
+      "code": "DESKTOP",
+      "name": "Masaüstü Bilgisayar",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "47a31666-8cc8-43f1-b60a-aace49381354",
+      "category": "equipment_type",
+      "code": "MONITOR",
+      "name": "Monitör",
+      "is_active": 1,
+      "sort_order": 50,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "054ef8d8-44c0-48bc-bf71-6608217d373e",
+      "category": "equipment_type",
+      "code": "KEYBOARD",
+      "name": "Klavye",
+      "is_active": 1,
+      "sort_order": 60,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "9010814a-0ed9-4633-9923-e21bfd31d793",
+      "category": "equipment_type",
+      "code": "MOUSE",
+      "name": "Mouse",
+      "is_active": 1,
+      "sort_order": 70,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "af24bd48-f2c3-43b4-b793-10d3f05fcad8",
+      "category": "equipment_type",
+      "code": "HEADSET",
+      "name": "Kulaklık",
+      "is_active": 1,
+      "sort_order": 80,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "d9d5eec3-2e1f-4b07-8f17-8b5956b0a261",
+      "category": "equipment_type",
+      "code": "CHARGER",
+      "name": "Şarj Cihazı",
+      "is_active": 1,
+      "sort_order": 90,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "7423cbab-4b50-4cac-ae11-9288882aee97",
+      "category": "equipment_type",
+      "code": "ADAPTER",
+      "name": "Adaptör",
+      "is_active": 1,
+      "sort_order": 100,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "0266aae8-e4f7-42e2-a0ad-3c915cc676e6",
+      "category": "equipment_type",
+      "code": "SIM",
+      "name": "SIM Kart",
+      "is_active": 1,
+      "sort_order": 110,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "e9522816-9008-4993-9d1b-4b1bef5578bb",
+      "category": "equipment_type",
+      "code": "MODEM",
+      "name": "Modem",
+      "is_active": 1,
+      "sort_order": 120,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "0d475230-a127-4ef4-ac17-85216c61d730",
+      "category": "equipment_type",
+      "code": "PRINTER",
+      "name": "Yazıcı",
+      "is_active": 1,
+      "sort_order": 130,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "8dcbe4c2-0e22-408b-8314-2525fbe8c46b",
+      "category": "equipment_type",
+      "code": "OTHER",
+      "name": "Diğer",
+      "is_active": 1,
+      "sort_order": 999,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "da37fe38-6c90-49a0-b366-5f71638504b5",
+      "category": "department",
+      "code": "IDARI_ISLER",
+      "name": "İdari İşler",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "65351f2f-23ed-4ad4-bb38-40de7da60290",
+      "category": "department",
+      "code": "FINANS",
+      "name": "Finans",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "f4fcfcaf-f407-469d-83d1-36c71530e709",
+      "category": "department",
+      "code": "INSAN_KAYNAKLARI",
+      "name": "İnsan Kaynakları",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "a0783d22-1fa5-456c-8b51-945595f72ebe",
+      "category": "department",
+      "code": "BILGI_TEKNOLOJILERI",
+      "name": "Bilgi Teknolojileri",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "c5e22656-9641-450c-a214-b23cdb2ce20e",
+      "category": "personnel_assignment_status",
+      "code": "ACTIVE",
+      "name": "Aktif Zimmet",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "b6e2ae30-bff6-4b34-b4c3-0655ea6e22e0",
+      "category": "personnel_assignment_status",
+      "code": "RETURNED",
+      "name": "İade Edildi",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "819b4c2e-e1cf-42cc-b557-aea5ca5a89a2",
+      "category": "personnel_assignment_status",
+      "code": "LOST",
+      "name": "Kayıp",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "ace9dee6-ca4a-4a88-8418-7dcd2bb4facd",
+      "category": "personnel_assignment_status",
+      "code": "DAMAGED",
+      "name": "Hasarlı",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "97313a75-93c5-4474-917c-5bcd39e2a746",
+      "category": "vehicle_usage_status",
+      "code": "IN_USE",
+      "name": "Kullanımda",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "3e08aaec-885f-459b-85a6-88854e099cbe",
+      "category": "vehicle_usage_status",
+      "code": "COMPLETED",
+      "name": "Tamamlandı",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "c14556ee-f432-4f1a-84fc-aa023f9ad3b7",
+      "category": "vehicle_usage_purpose",
+      "code": "COMPANY_BUSINESS",
+      "name": "Şirket İşleri",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "2def31b5-c3e3-427b-9589-c35fb8e5fa0f",
+      "category": "vehicle_usage_purpose",
+      "code": "BANK",
+      "name": "Banka İşleri",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "2d247a9a-f296-4687-b2fb-b3df785ce6ea",
+      "category": "vehicle_usage_purpose",
+      "code": "OFFICIAL",
+      "name": "Resmî İşlem",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "41ddae12-2fe6-499c-ada6-5dca90430be0",
+      "category": "vehicle_usage_purpose",
+      "code": "OTHER",
+      "name": "Diğer",
+      "is_active": 1,
+      "sort_order": 999,
+      "is_system": 0,
+      "created_at": "2026-09-24T16:26:30.004Z",
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "id": "8780e3f1d096880a695dfa4b94c339a2",
+      "category": "document_type",
+      "code": "PARKING",
+      "name": "Otopark",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "7d25315def2a893b010b747185dc9890",
+      "category": "vehicle_status",
+      "code": "TEMP_IN_USE",
+      "name": "Geçici Kullanımda",
+      "is_active": 1,
+      "sort_order": 25,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "e2c5a0217787e41995c147d99b25963c",
+      "category": "equipment_status",
+      "code": "AVAILABLE",
+      "name": "Havuzda",
+      "is_active": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "1c356cb94a3ec0c0a273f996618bd725",
+      "category": "equipment_status",
+      "code": "ASSIGNED",
+      "name": "Zimmetli",
+      "is_active": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "184dc96aa99c146c3f01558d19d87241",
+      "category": "equipment_status",
+      "code": "DAMAGED",
+      "name": "Hasarlı",
+      "is_active": 1,
+      "sort_order": 30,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "56ca9281bea2160997e92dfd1fc2b6ea",
+      "category": "equipment_status",
+      "code": "SERVICE",
+      "name": "Serviste",
+      "is_active": 1,
+      "sort_order": 40,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "id": "5adced1a033921119c72ca7f275eb8a0",
+      "category": "equipment_status",
+      "code": "INACTIVE",
+      "name": "Kullanım Dışı",
+      "is_active": 1,
+      "sort_order": 50,
+      "is_system": 1,
+      "created_at": "2026-09-24T16:26:30.021Z",
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    }
+  ],
+  "alert_settings": [
+    {
+      "setting_key": "inspection",
+      "label": "Muayene uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "traffic_insurance",
+      "label": "Trafik sigortası uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "casco",
+      "label": "Kasko uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "maintenance",
+      "label": "Bakım uyarısı",
+      "days_before": 15,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "fleet_contract",
+      "label": "Filo sözleşme uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "task",
+      "label": "Görev son tarihi uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "vehicle_status",
+      "label": "Kritik araç durumu",
+      "days_before": 0,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "setting_key": "parking",
+      "label": "Otopark süresi uyarısı",
+      "days_before": 30,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.021Z"
+    },
+    {
+      "setting_key": "traffic_fine",
+      "label": "Ödenmemiş trafik cezası",
+      "days_before": 0,
+      "is_active": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.042Z"
+    }
+  ],
+  "dashboard_settings": [
+    {
+      "card_key": "total_vehicles",
+      "label": "Toplam Araç",
+      "is_visible": 1,
+      "sort_order": 10,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "service_vehicles",
+      "label": "Servisteki Araçlar",
+      "is_visible": 1,
+      "sort_order": 20,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "attention",
+      "label": "Dikkat Gerektirenler",
+      "is_visible": 1,
+      "sort_order": 30,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "tasks",
+      "label": "Açık Görevler",
+      "is_visible": 1,
+      "sort_order": 40,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "personnel_active_assignments",
+      "label": "Aktif Personel Zimmeti",
+      "is_visible": 0,
+      "sort_order": 50,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "equipment_total",
+      "label": "Toplam Ekipman",
+      "is_visible": 0,
+      "sort_order": 60,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "equipment_due_returns",
+      "label": "İade Bekleyen Ekipman",
+      "is_visible": 0,
+      "sort_order": 70,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "equipment_damaged",
+      "label": "Hasarlı Ekipman",
+      "is_visible": 0,
+      "sort_order": 80,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "fleet_vehicles",
+      "label": "Filo Araçları",
+      "is_visible": 1,
+      "sort_order": 50,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "owned_vehicles",
+      "label": "Özmal Araçlar",
+      "is_visible": 1,
+      "sort_order": 60,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "available_vehicles",
+      "label": "Boştaki Araçlar",
+      "is_visible": 1,
+      "sort_order": 70,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "assigned_vehicles",
+      "label": "Zimmetli Araçlar",
+      "is_visible": 1,
+      "sort_order": 80,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "card_key": "vehicles_in_use",
+      "label": "Şu Anda Kullanımda Olan Araçlar",
+      "is_visible": 1,
+      "sort_order": 90,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    }
+  ],
+  "menu_settings": [
+    {
+      "menu_key": "dashboard",
+      "label": "Ana Panel",
+      "href": "/ana-panel",
+      "is_visible": 1,
+      "sort_order": 10,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "vehicles",
+      "label": "Araçlar",
+      "href": "/araclar",
+      "is_visible": 1,
+      "sort_order": 20,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "maintenance",
+      "label": "Servis / İkame",
+      "href": "/servis-ikame",
+      "is_visible": 1,
+      "sort_order": 25,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "accidents",
+      "label": "Kaza / Hasar",
+      "href": "/kaza-hasar",
+      "is_visible": 1,
+      "sort_order": 30,
+      "is_system": 0,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "tires",
+      "label": "Lastik Yönetimi",
+      "href": "/lastik-yonetimi",
+      "is_visible": 1,
+      "sort_order": 40,
+      "is_system": 0,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "personnel",
+      "label": "Personel Yönetimi",
+      "href": "/personel-yonetimi",
+      "is_visible": 1,
+      "sort_order": 50,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "personnel_assets",
+      "label": "Personel Zimmetleri",
+      "href": "/personel-zimmetleri",
+      "is_visible": 1,
+      "sort_order": 60,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "vehicle_usage",
+      "label": "Araç Kullanım / Teslim",
+      "href": "/arac-kullanim-teslim",
+      "is_visible": 1,
+      "sort_order": 70,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "tasks",
+      "label": "Görevler",
+      "href": "/gorevler",
+      "is_visible": 1,
+      "sort_order": 80,
+      "is_system": 0,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "calendar",
+      "label": "Takvim",
+      "href": "/takvim",
+      "is_visible": 1,
+      "sort_order": 70,
+      "is_system": 0,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "reports",
+      "label": "Raporlar",
+      "href": "/raporlar",
+      "is_visible": 1,
+      "sort_order": 80,
+      "is_system": 0,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "users",
+      "label": "Kullanıcılar",
+      "href": "/kullanicilar",
+      "is_visible": 1,
+      "sort_order": 85,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.033Z"
+    },
+    {
+      "menu_key": "audit",
+      "label": "İşlem Geçmişi",
+      "href": "/islem-gecmisi",
+      "is_visible": 1,
+      "sort_order": 90,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.004Z"
+    },
+    {
+      "menu_key": "vehicle_assignments",
+      "label": "Araç Zimmetleri",
+      "href": "/arac-zimmetleri",
+      "is_visible": 1,
+      "sort_order": 25,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.011Z"
+    },
+    {
+      "menu_key": "vehicle_qr",
+      "label": "Araç QR / KM Güncelleme",
+      "href": "/arac-qr-km-guncelleme",
+      "is_visible": 1,
+      "sort_order": 75,
+      "is_system": 1,
+      "updated_by": null,
+      "updated_at": "2026-09-24T16:26:30.041Z"
+    }
+  ],
+  "report_catalog": [
+    {
+      "slug": "vehicle-list",
+      "name": "Araç Listesi",
+      "report_type": "TABLO",
+      "category": "Araç Raporları",
+      "description": "Aktif filo ve özmal araçların genel listesi.",
+      "sort_order": 10,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "fleet-vehicles",
+      "name": "Filo Dağılımı",
+      "report_type": "TABLO",
+      "category": "Araç Raporları",
+      "description": "Filo araçları, sözleşme bitişleri ve kilometre limitleri.",
+      "sort_order": 20,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "owned-vehicles",
+      "name": "Özmal Araçlar",
+      "report_type": "TABLO",
+      "category": "Araç Raporları",
+      "description": "Şirkete ait özmal araçların güncel listesi.",
+      "sort_order": 30,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "vehicle-cost",
+      "name": "Araç Maliyetleri",
+      "report_type": "ÖZET",
+      "category": "Araç Raporları",
+      "description": "Servis/bakım, kaza/hasar, trafik cezası ve lastik maliyetlerinin yıllık özeti.",
+      "sort_order": 40,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "maintenance",
+      "name": "Servis / Bakım Geçmişi",
+      "report_type": "TABLO",
+      "category": "Servis / Bakım Raporları",
+      "description": "Bakım ve servis işlemlerinin tarih, durum ve maliyet özeti.",
+      "sort_order": 50,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "replacement-history",
+      "name": "İkame Araç Geçmişi",
+      "report_type": "TABLO",
+      "category": "Servis / Bakım Raporları",
+      "description": "Servis, kaza ve hasar kaynaklı ikame araç geçmişi.",
+      "sort_order": 60,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "active-vehicle-assignments",
+      "name": "Aktif Araç Zimmetleri",
+      "report_type": "TABLO",
+      "category": "Zimmet Raporları",
+      "description": "Halen iade edilmemiş araç zimmetleri.",
+      "sort_order": 70,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "personnel-assignments",
+      "name": "Ekipman Zimmetleri",
+      "report_type": "TABLO",
+      "category": "Zimmet Raporları",
+      "description": "Personel bazlı aktif ekipman zimmetleri.",
+      "sort_order": 80,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "accident-damage",
+      "name": "Kaza / Hasar Kayıtları",
+      "report_type": "TABLO",
+      "category": "Kaza / Hasar Raporları",
+      "description": "Kaza dosyaları ve gerçekleşen maliyetlerin özeti.",
+      "sort_order": 90,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "active-damage-files",
+      "name": "Aktif Hasar Dosyaları",
+      "report_type": "TABLO",
+      "category": "Kaza / Hasar Raporları",
+      "description": "Henüz tamamlanmamış veya kapanmamış kaza / hasar dosyaları.",
+      "sort_order": 100,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "traffic-fines",
+      "name": "Trafik Cezası Listesi",
+      "report_type": "TABLO",
+      "category": "Trafik Cezaları",
+      "description": "Araçlara bağlı trafik cezaları ve ödeme durumları.",
+      "sort_order": 110,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "audit-log",
+      "name": "İşlem Geçmişi",
+      "report_type": "TABLO",
+      "category": "Sistem",
+      "description": "Sistem üzerinde gerçekleştirilen kritik işlemlerin salt okunur geçmişi.",
+      "sort_order": 120,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:29.988Z"
+    },
+    {
+      "slug": "tire-history",
+      "name": "Lastik Hareket Geçmişi",
+      "report_type": "Tablo",
+      "category": "Araç Raporları",
+      "description": "Lastik işlemlerini, kilometreleri ve işlemi fiziksel olarak yapan kişiyi gösterir.",
+      "sort_order": 35,
+      "is_active": 1,
+      "created_at": "2026-09-24T16:26:30.033Z"
+    }
+  ]
+}
