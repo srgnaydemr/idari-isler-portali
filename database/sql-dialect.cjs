@@ -2,7 +2,7 @@ function tokens(sql){return sql.match(/'(?:''|[^'])*'|"(?:""|[^"])*"|`[^`]*`|@?[
 function translate(sql){
  let s=sql.trim().replace(/\bBEGIN IMMEDIATE\b/gi,'START TRANSACTION').replace(/\bRELEASE (?!SAVEPOINT)(\w+)/gi,'RELEASE SAVEPOINT $1').replace(/\bROLLBACK TO (?!SAVEPOINT)(\w+)/gi,'ROLLBACK TO SAVEPOINT $1');
  if(/^PRAGMA table_info\((\w+)\)/i.test(s)){const name=s.match(/^PRAGMA table_info\((\w+)\)/i)[1];return `SELECT COLUMN_NAME name,DATA_TYPE type,IS_NULLABLE nullable FROM information_schema.COLUMNS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME='${name}' ORDER BY ORDINAL_POSITION`}
- s=s.replace(/\bCOLLATE NOCASE\b/gi,'COLLATE utf8mb4_tr_0900_ai_ci').replace(/\bINSERT OR IGNORE\b/gi,'INSERT IGNORE');
+ s=s.replace(/\bCOLLATE NOCASE\b/gi,'COLLATE utf8mb4_unicode_ci').replace(/\bINSERT OR IGNORE\b/gi,'INSERT IGNORE');
  s=s.replace(/ON CONFLICT\s*\([^)]*\)\s*DO UPDATE SET/gi,'ON DUPLICATE KEY UPDATE').replace(/excluded\.(\w+)/gi,'VALUES($1)');
  s=s.replace(/ON CONFLICT\s*\((\w+)[^)]*\)\s*DO NOTHING/gi,'ON DUPLICATE KEY UPDATE $1=$1');
  s=s.replace(/date\(\?,\s*'\+(\d+) days?'\)/gi,'DATE_ADD(DATE(?), INTERVAL $1 DAY)').replace(/date\(\?,\s*\?\)/gi,'DATE_ADD(DATE(?), INTERVAL CAST(? AS SIGNED) DAY)');

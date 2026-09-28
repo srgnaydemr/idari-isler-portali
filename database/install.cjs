@@ -62,8 +62,8 @@ async function install(c,{seed=false}={}){
   if(!baseDone?.ready){
    const sql=statements();
    for(const q of sql.ddl)await c.query(q);
-   for(const q of sql.indexes){const name=q.match(/INDEX `([^`]+)`/)[1],table=q.match(/ ON `([^`]+)`/)[1];const [[r]]=await c.query('SELECT count(*) n FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=? AND INDEX_NAME=?',[table,name]);if(!r.n)await c.query(q)}
-   for(const q of [...sql.checks,...sql.foreign]){const name=q.match(/CONSTRAINT `([^`]+)`/)[1];const [[r]]=await c.query('SELECT count(*) n FROM information_schema.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA=DATABASE() AND CONSTRAINT_NAME=?',[name]);if(!r.n)await c.query(q)}
+   for(const q of sql.indexes){const nm=q.match(/INDEX\s+`([^`]+)`/i),tm=q.match(/ON\s+`([^`]+)`/i);if(!nm||!tm)throw Error('Index SQL ayrıştırılamadı: '+q);const name=nm[1],table=tm[1];const [[r]]=await c.query('SELECT count(*) n FROM information_schema.STATISTICS WHERE TABLE_SCHEMA=DATABASE() AND TABLE_NAME=? AND INDEX_NAME=?',[table,name]);if(!r.n)await c.query(q)}
+   for(const q of [...sql.checks,...sql.foreign]){const cm=q.match(/CONSTRAINT\s+`([^`]+)`/i);if(!cm)throw Error('Constraint SQL ayrıştırılamadı: '+q);const name=cm[1];const [[r]]=await c.query('SELECT count(*) n FROM information_schema.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA=DATABASE() AND CONSTRAINT_NAME=?',[name]);if(!r.n)await c.query(q)}
    await c.query('DROP FUNCTION IF EXISTS portal_search');await c.query(sql.searchFunction);
    for(const q of sql.triggers){const name=q.match(/CREATE TRIGGER\s+(\w+)/i)[1];await c.query('DROP TRIGGER IF EXISTS '+quote(name));try{await c.query(q)}catch(e){throw Error(name+': '+e.message+'\n'+q)}}
    if(seed){await c.beginTransaction();try{await c.query('SET @portal_import=1');for(const [table,rows] of Object.entries(seeds))for(const row of rows){const keys=Object.keys(row);await c.query(`INSERT IGNORE INTO ${quote(table)}(${keys.map(quote)}) VALUES(${keys.map(()=>'?')})`,keys.map(k=>row[k]))}await c.commit()}catch(e){await c.rollback();throw e}finally{await c.query('SET @portal_import=0')}}
