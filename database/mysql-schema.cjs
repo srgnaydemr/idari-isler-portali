@@ -637,16 +637,16 @@ END
    * MariaDB bunu desteklemediği için
    * normal performans indexi kullanıyoruz.
    */
-  indexes.push(
-    `
-CREATE INDEX idx_replacement_active_plate
-ON vehicle_replacement_records
+indexes.push(
+  `
+CREATE INDEX \`idx_replacement_active_plate\`
+ON \`vehicle_replacement_records\`
 (
-  replacement_plate,
-  status
+  \`replacement_plate\`,
+  \`status\`
 )
 `.trim()
-  );
+);
 
 
   /*
